@@ -126,8 +126,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <footer className="border-t border-border/40 py-6 text-center text-xs text-muted-foreground">
+          พัฒนาระบบโดย Schedy · ระบบจัดการตารางเรียนสมัยใหม่
+        </footer>
+      </div>
+      <Toaster />
     </QueryClientProvider>
   );
 }
