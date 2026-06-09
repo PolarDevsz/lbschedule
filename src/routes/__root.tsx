@@ -79,11 +79,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Schedy — ระบบจัดการตารางเรียน" },
-      { name: "description", content: "ระบบจัดการและค้นหาตารางเรียนที่ทันสมัย" },
-      { property: "og:title", content: "Schedy — ระบบจัดการตารางเรียน" },
-      { property: "og:description", content: "ค้นหาและจัดการตารางเรียนได้ทุกที่ ทุกเวลา" },
+      { title: "LBSchedule - ระบบจัดการตารางเรียน" },
+      { name: "description", content: "ระบบจัดการและค้นหาตารางเรียน ของ วิทยาลัยเทคนิคลพบุรี สาขาวิชา ช่างเทคนคคอมพวเตอร์" },
+      { property: "og:title", content: "LBSchedule - ระบบจัดการตารางเรียน" },
+      { property: "og:description", content: "ระบบจัดการและค้นหาตารางเรียน ของ วิทยาลัยเทคนิคลพบุรี สาขาวิชา ช่างเทคนคคอมพวเตอร์" },
       { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "LBSchedule - ระบบจัดการตารางเรียน" },
+      { name: "twitter:description", content: "ระบบจัดการและค้นหาตารางเรียน ของ วิทยาลัยเทคนิคลพบุรี สาขาวิชา ช่างเทคนคคอมพวเตอร์" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7061db43-c414-4159-9c76-189b1491b549/id-preview-7e55e41b--f9e295a4-13d9-4f80-9965-8ace0eba8316.lovable.app-1781000561251.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7061db43-c414-4159-9c76-189b1491b549/id-preview-7e55e41b--f9e295a4-13d9-4f80-9965-8ace0eba8316.lovable.app-1781000561251.png" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
