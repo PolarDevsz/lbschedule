@@ -134,7 +134,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <footer className="border-t border-border/40 py-6 text-center text-xs text-muted-foreground">
-          พัฒนาระบบโดย LBSchedule · ระบบจัดการตารางเรียนสมัยใหม่
+          พัฒนาระบบโดย บุคคลนิรนามจาก [ 1 ชทค.1 ] · ระบบจัดการตารางเรียนสมัยใหม่
         </footer>
       </div>
       <Toaster />
