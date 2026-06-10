@@ -21,7 +21,7 @@ export const Route = createFileRoute("/_authenticated/admin")({
     const { data } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle();
     if (!data) throw redirect({ to: "/" });
   },
-  head: () => ({ meta: [{ title: "ผู้ดูแลระบบ — Schedy" }] }),
+  head: () => ({ meta: [{ title: "ผู้ดูแลระบบ — LBSchedule" }] }),
   component: AdminPage,
 });
 
