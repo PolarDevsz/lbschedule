@@ -14,7 +14,7 @@ export const Route = createFileRoute("/schedule")({
   validateSearch: (s: Record<string, unknown>): Search => ({
     major: typeof s.major === "string" ? s.major : undefined,
   }),
-  head: () => ({ meta: [{ title: "ตารางเรียน — Schedy" }] }),
+  head: () => ({ meta: [{ title: "ตารางเรียน — LBSchedule" }] }),
   component: SchedulePage,
 });
 

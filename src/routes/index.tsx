@@ -9,7 +9,7 @@ import { Search, CalendarDays, Clock, MapPin } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Schedy — ระบบจัดการตารางเรียน" },
+      { title: "LBSchedule — ระบบจัดการตารางเรียน" },
       { name: "description", content: "ค้นหาและดูตารางเรียนได้ทันที ระบบจัดการตารางเรียนสมัยใหม่" },
     ],
   }),
@@ -48,8 +48,7 @@ function HomePage() {
           ระบบจัดการ<span className="text-gradient-teal">ตารางเรียน</span>
         </h1>
         <p className="mt-6 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
-          ยินดีต้อนรับสู่ระบบจัดตารางเรียน ภาควิชาคอมพิวเตอร์ศึกษา
-          สำหรับนักศึกษาและบุคคลทั่วไป ค้นหาและดูตารางเรียนได้ทันทีโดยไม่ต้องเข้าสู่ระบบ
+          ยินดีต้อนรับสู่ระบบจัดตารางเรียน จากแผนกวิชาช่างเทคนิคคอมพิวเตอร์ สำหรับนักศึกษาและบุคคลทั่วไป ค้นหาและดูตารางเรียนได้ทันทีโดยไม่ต้องเข้าสู่ระบบ
         </p>
 
         {/* Search */}

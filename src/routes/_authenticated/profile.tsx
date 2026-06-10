@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { User } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/profile")({
-  head: () => ({ meta: [{ title: "โปรไฟล์ — Schedy" }] }),
+  head: () => ({ meta: [{ title: "โปรไฟล์ — LBSchedule" }] }),
   component: ProfilePage,
 });
 

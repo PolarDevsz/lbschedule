@@ -15,7 +15,7 @@ export const Route = createFileRoute("/auth")({
   validateSearch: (s: Record<string, unknown>): Search => ({
     mode: s.mode === "register" ? "register" : "login",
   }),
-  head: () => ({ meta: [{ title: "เข้าสู่ระบบ — Schedy" }] }),
+  head: () => ({ meta: [{ title: "เข้าสู่ระบบ — LBSchedule" }] }),
   component: AuthPage,
 });
 
@@ -86,7 +86,7 @@ function AuthPage() {
           <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-accent shadow-glow mb-4">
             <CalendarDays className="h-7 w-7 text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-bold">ยินดีต้อนรับสู่ Schedy</h1>
+          <h1 className="text-2xl font-bold">ยินดีต้อนรับสู่ LBSchedule</h1>
           <p className="text-sm text-muted-foreground mt-1">เข้าสู่ระบบเพื่อจัดการตารางเรียนของคุณ</p>
         </div>
 

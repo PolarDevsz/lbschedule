@@ -43,7 +43,7 @@ export function Header() {
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow transition-transform group-hover:scale-105">
             <Calendar className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">Schedy</span>
+          <span className="text-lg font-semibold tracking-tight">LBSchedule</span>
         </Link>
 
         <nav className="flex items-center gap-2">
