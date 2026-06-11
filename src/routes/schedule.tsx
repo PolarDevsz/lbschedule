@@ -65,6 +65,33 @@ function SchedulePage() {
     },
   });
 
+  const subjectIds = Array.from(
+    new Set(schedules.map((s) => s.subjects?.id).filter(Boolean) as string[])
+  );
+
+  const { data: assignmentCounts = {} } = useQuery({
+    queryKey: ["assignment-counts", subjectIds.sort().join(",")],
+    enabled: subjectIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("assignments")
+        .select("subject_id,due_date")
+        .in("subject_id", subjectIds);
+      if (error) throw error;
+      const now = Date.now();
+      const map: Record<string, { total: number; upcoming: number; overdue: number }> = {};
+      for (const a of data as { subject_id: string; due_date: string | null }[]) {
+        const m = (map[a.subject_id] ??= { total: 0, upcoming: 0, overdue: 0 });
+        m.total += 1;
+        if (a.due_date) {
+          if (new Date(a.due_date).getTime() < now) m.overdue += 1;
+          else m.upcoming += 1;
+        }
+      }
+      return map;
+    },
+  });
+
   const hourToMin = (t: string) => {
     const [h, m] = t.split(":").map(Number);
     return h * 60 + m;
