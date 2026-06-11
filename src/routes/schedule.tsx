@@ -108,7 +108,7 @@ function SchedulePage() {
           </SelectContent>
         </Select>
         <Select value={yearFilter} onValueChange={setYearFilter}>
-          <SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+          <SelectTrigger className="w-full sm:w-40"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">ทุกชั้นปี</SelectItem>
             {[1, 2, 3, 4].map((y) => (
