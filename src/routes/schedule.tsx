@@ -197,17 +197,36 @@ function SchedulePage() {
                         const totalMin = 11 * 60;
                         const left = (startMin / totalMin) * 100;
                         const width = ((endMin - startMin) / totalMin) * 100;
+                        const counts = s.subjects ? assignmentCounts[s.subjects.id] : undefined;
+                        const hasWork = !!counts && counts.total > 0;
+                        const hasOverdue = !!counts && counts.overdue > 0;
                         return (
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-2 overflow-hidden backdrop-blur-sm shadow-md hover:shadow-glow transition-all cursor-pointer text-left hover:scale-[1.02] hover:z-10`}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-2 overflow-hidden backdrop-blur-sm shadow-md hover:shadow-glow transition-all cursor-pointer text-left hover:scale-[1.03] hover:z-10`}
                             style={{ left: `${left}%`, width: `${width}%` }}
-                            title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}\nคลิกเพื่อดูงาน`}
+                            title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
-                            <div className="text-[11px] font-bold truncate text-foreground">{s.subjects?.code}</div>
-                            <div className="text-[10px] text-foreground/90 truncate">{s.subjects?.name}</div>
-                            <div className="text-[9px] text-foreground/70 truncate">
+                            {/* shine sweep on hover */}
+                            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:[animation:shine_1.1s_ease-out]" />
+                            {/* assignment indicator */}
+                            {hasWork && (
+                              <span className="absolute top-1.5 right-1.5 flex items-center gap-1 z-10">
+                                {hasOverdue && (
+                                  <span className="relative flex h-2 w-2">
+                                    <span className="absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75 animate-ping" />
+                                    <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive" />
+                                  </span>
+                                )}
+                                <span className="rounded-full bg-background/80 backdrop-blur px-1.5 py-0.5 text-[9px] font-bold text-foreground border border-border shadow-sm">
+                                  {counts!.total}
+                                </span>
+                              </span>
+                            )}
+                            <div className="relative text-[11px] font-bold truncate text-foreground">{s.subjects?.code}</div>
+                            <div className="relative text-[10px] text-foreground/90 truncate">{s.subjects?.name}</div>
+                            <div className="relative text-[9px] text-foreground/70 truncate">
                               {s.start_time.slice(0, 5)}–{s.end_time.slice(0, 5)} · {s.rooms?.name}
                             </div>
                           </button>
