@@ -198,8 +198,8 @@ function SchedulePage() {
       {schedules.length > 0 && (
         <div className="mt-8">
           <h2 className="font-semibold mb-3">รายการวิชา</h2>
-          <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl overflow-hidden">
-            <table className="w-full text-sm">
+          <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl overflow-x-auto">
+            <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
                 <tr>
                   <th className="text-left p-3">วัน</th>
