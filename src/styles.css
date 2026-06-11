@@ -131,6 +131,7 @@
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
+    transition: background-color 400ms ease, color 250ms ease;
   }
 
   body {
@@ -138,6 +139,22 @@
     background-attachment: fixed;
     min-height: 100vh;
   }
+}
+
+@keyframes theme-icon-in {
+  0% { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  100% { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 currentColor; opacity: 0.7; }
+  70% { box-shadow: 0 0 0 6px transparent; opacity: 0; }
+  100% { box-shadow: 0 0 0 0 transparent; opacity: 0; }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-120%) skewX(-12deg); }
+  100% { transform: translateX(220%) skewX(-12deg); }
 }
 
 @utility text-gradient-teal {
@@ -150,3 +167,4 @@
 @utility shadow-glow {
   box-shadow: var(--shadow-glow);
 }
+

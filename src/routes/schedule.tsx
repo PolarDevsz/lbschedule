@@ -65,6 +65,33 @@ function SchedulePage() {
     },
   });
 
+  const subjectIds = Array.from(
+    new Set(schedules.map((s) => s.subjects?.id).filter(Boolean) as string[])
+  );
+
+  const { data: assignmentCounts = {} } = useQuery({
+    queryKey: ["assignment-counts", subjectIds.sort().join(",")],
+    enabled: subjectIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("assignments")
+        .select("subject_id,due_date")
+        .in("subject_id", subjectIds);
+      if (error) throw error;
+      const now = Date.now();
+      const map: Record<string, { total: number; upcoming: number; overdue: number }> = {};
+      for (const a of data as { subject_id: string; due_date: string | null }[]) {
+        const m = (map[a.subject_id] ??= { total: 0, upcoming: 0, overdue: 0 });
+        m.total += 1;
+        if (a.due_date) {
+          if (new Date(a.due_date).getTime() < now) m.overdue += 1;
+          else m.upcoming += 1;
+        }
+      }
+      return map;
+    },
+  });
+
   const hourToMin = (t: string) => {
     const [h, m] = t.split(":").map(Number);
     return h * 60 + m;
@@ -170,17 +197,36 @@ function SchedulePage() {
                         const totalMin = 11 * 60;
                         const left = (startMin / totalMin) * 100;
                         const width = ((endMin - startMin) / totalMin) * 100;
+                        const counts = s.subjects ? assignmentCounts[s.subjects.id] : undefined;
+                        const hasWork = !!counts && counts.total > 0;
+                        const hasOverdue = !!counts && counts.overdue > 0;
                         return (
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-2 overflow-hidden backdrop-blur-sm shadow-md hover:shadow-glow transition-all cursor-pointer text-left hover:scale-[1.02] hover:z-10`}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-2 overflow-hidden backdrop-blur-sm shadow-md hover:shadow-glow transition-all cursor-pointer text-left hover:scale-[1.03] hover:z-10`}
                             style={{ left: `${left}%`, width: `${width}%` }}
-                            title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}\nคลิกเพื่อดูงาน`}
+                            title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
-                            <div className="text-[11px] font-bold truncate text-foreground">{s.subjects?.code}</div>
-                            <div className="text-[10px] text-foreground/90 truncate">{s.subjects?.name}</div>
-                            <div className="text-[9px] text-foreground/70 truncate">
+                            {/* shine sweep on hover */}
+                            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:[animation:shine_1.1s_ease-out]" />
+                            {/* assignment indicator */}
+                            {hasWork && (
+                              <span className="absolute top-1.5 right-1.5 flex items-center gap-1 z-10">
+                                {hasOverdue && (
+                                  <span className="relative flex h-2 w-2">
+                                    <span className="absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75 animate-ping" />
+                                    <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive" />
+                                  </span>
+                                )}
+                                <span className="rounded-full bg-background/80 backdrop-blur px-1.5 py-0.5 text-[9px] font-bold text-foreground border border-border shadow-sm">
+                                  {counts!.total}
+                                </span>
+                              </span>
+                            )}
+                            <div className="relative text-[11px] font-bold truncate text-foreground">{s.subjects?.code}</div>
+                            <div className="relative text-[10px] text-foreground/90 truncate">{s.subjects?.name}</div>
+                            <div className="relative text-[9px] text-foreground/70 truncate">
                               {s.start_time.slice(0, 5)}–{s.end_time.slice(0, 5)} · {s.rooms?.name}
                             </div>
                           </button>
@@ -212,21 +258,34 @@ function SchedulePage() {
                 </tr>
               </thead>
               <tbody>
-                {schedules.map((s) => (
-                  <tr
-                    key={s.id}
-                    onClick={() => openSubject(s)}
-                    className="border-t border-border/40 hover:bg-muted/30 cursor-pointer"
-                  >
-                    <td className="p-3">{DAYS[s.day_of_week]}</td>
-                    <td className="p-3">{s.start_time.slice(0, 5)} - {s.end_time.slice(0, 5)}</td>
-                    <td className="p-3 font-mono text-xs">{s.subjects?.code}</td>
-                    <td className="p-3">{s.subjects?.name}</td>
-                    <td className="p-3 text-muted-foreground">{s.teachers?.name}</td>
-                    <td className="p-3 text-muted-foreground">{s.rooms?.name}</td>
-                    <td className="p-3 text-muted-foreground">ปี {s.year} / {s.section}</td>
-                  </tr>
-                ))}
+                {schedules.map((s) => {
+                  const counts = s.subjects ? assignmentCounts[s.subjects.id] : undefined;
+                  return (
+                    <tr
+                      key={s.id}
+                      onClick={() => openSubject(s)}
+                      className="border-t border-border/40 hover:bg-muted/30 cursor-pointer transition-colors"
+                    >
+                      <td className="p-3">{DAYS[s.day_of_week]}</td>
+                      <td className="p-3 whitespace-nowrap">{s.start_time.slice(0, 5)} - {s.end_time.slice(0, 5)}</td>
+                      <td className="p-3 font-mono text-xs">{s.subjects?.code}</td>
+                      <td className="p-3">
+                        <span className="inline-flex items-center gap-2">
+                          {s.subjects?.name}
+                          {counts && counts.total > 0 && (
+                            <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border ${counts.overdue > 0 ? "bg-destructive/15 text-destructive border-destructive/40" : "bg-primary/15 text-primary border-primary/40"}`}>
+                              <span className={`h-1.5 w-1.5 rounded-full ${counts.overdue > 0 ? "bg-destructive animate-pulse" : "bg-primary"}`} />
+                              {counts.total} งาน{counts.overdue > 0 ? ` · เลย ${counts.overdue}` : ""}
+                            </span>
+                          )}
+                        </span>
+                      </td>
+                      <td className="p-3 text-muted-foreground">{s.teachers?.name}</td>
+                      <td className="p-3 text-muted-foreground">{s.rooms?.name}</td>
+                      <td className="p-3 text-muted-foreground whitespace-nowrap">ปี {s.year} / {s.section}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
