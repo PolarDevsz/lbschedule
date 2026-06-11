@@ -125,70 +125,73 @@ function SchedulePage() {
           ไม่พบตารางเรียน
         </div>
       ) : (
-        <div className="rounded-2xl bg-card/60 border-2 border-border backdrop-blur-xl p-4 overflow-x-auto shadow-card">
-          <div className="min-w-[1000px] grid grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
-            {/* header */}
-            <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-border bg-muted/30 rounded-tl-lg">
-              วัน / เวลา
-            </div>
-            {HOURS.map((h, i) => (
-              <div
-                key={h}
-                className={`text-xs font-semibold text-foreground/80 text-center py-3 border-b-2 border-l border-border bg-muted/30 ${
-                  i === HOURS.length - 1 ? "rounded-tr-lg" : ""
-                }`}
-              >
-                {String(h).padStart(2, "0")}:00
+        <>
+          <p className="md:hidden text-xs text-muted-foreground mb-2">← เลื่อนแนวนอนเพื่อดูตารางทั้งหมด →</p>
+          <div className="rounded-2xl bg-card/60 border-2 border-border backdrop-blur-xl p-3 sm:p-4 overflow-x-auto shadow-card">
+            <div className="min-w-[1000px] grid grid-cols-[90px_repeat(11,minmax(80px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
+              {/* header */}
+              <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-r border-border bg-muted/40 rounded-tl-lg">
+                วัน / เวลา
               </div>
-            ))}
+              {HOURS.map((h, i) => (
+                <div
+                  key={h}
+                  className={`text-xs font-semibold text-foreground/80 text-center py-3 border-b-2 border-l border-border bg-muted/40 ${
+                    i === HOURS.length - 1 ? "rounded-tr-lg" : ""
+                  }`}
+                >
+                  {String(h).padStart(2, "0")}:00
+                </div>
+              ))}
 
-            {DAYS.map((d, idx) => (
-              <div key={d} className="contents">
-                <div
-                  className={`text-sm font-semibold py-4 px-3 flex items-center border-b border-border bg-muted/10 ${
-                    idx === DAYS.length - 1 ? "rounded-bl-lg border-b-0" : ""
-                  }`}
-                >
-                  {d}
+              {DAYS.map((d, idx) => (
+                <div key={d} className="contents">
+                  <div
+                    className={`text-sm font-semibold py-4 px-3 flex items-center border-b border-r border-border bg-muted/20 ${
+                      idx === DAYS.length - 1 ? "rounded-bl-lg border-b-0" : ""
+                    }`}
+                  >
+                    {d}
+                  </div>
+                  <div
+                    className={`col-span-11 relative h-20 border-b border-border ${
+                      idx === DAYS.length - 1 ? "border-b-0" : ""
+                    } ${idx % 2 === 0 ? "bg-muted/10" : ""}`}
+                    style={{
+                      backgroundImage:
+                        "repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px calc(100%/11))",
+                    }}
+                  >
+                    {schedules
+                      .filter((s) => s.day_of_week === idx)
+                      .map((s, i) => {
+                        const startMin = hourToMin(s.start_time) - 8 * 60;
+                        const endMin = hourToMin(s.end_time) - 8 * 60;
+                        const totalMin = 11 * 60;
+                        const left = (startMin / totalMin) * 100;
+                        const width = ((endMin - startMin) / totalMin) * 100;
+                        return (
+                          <button
+                            key={s.id}
+                            onClick={() => openSubject(s)}
+                            className={`absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-2 overflow-hidden backdrop-blur-sm shadow-md hover:shadow-glow transition-all cursor-pointer text-left hover:scale-[1.02] hover:z-10`}
+                            style={{ left: `${left}%`, width: `${width}%` }}
+                            title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}\nคลิกเพื่อดูงาน`}
+                          >
+                            <div className="text-[11px] font-bold truncate text-foreground">{s.subjects?.code}</div>
+                            <div className="text-[10px] text-foreground/90 truncate">{s.subjects?.name}</div>
+                            <div className="text-[9px] text-foreground/70 truncate">
+                              {s.start_time.slice(0, 5)}–{s.end_time.slice(0, 5)} · {s.rooms?.name}
+                            </div>
+                          </button>
+                        );
+                      })}
+                  </div>
                 </div>
-                <div
-                  className={`col-span-11 relative h-20 border-b border-border ${
-                    idx === DAYS.length - 1 ? "border-b-0" : ""
-                  }`}
-                  style={{
-                    backgroundImage:
-                      "repeating-linear-gradient(to right, hsl(var(--border) / 0.4) 0 1px, transparent 1px calc(100%/11))",
-                  }}
-                >
-                  {schedules
-                    .filter((s) => s.day_of_week === idx)
-                    .map((s, i) => {
-                      const startMin = hourToMin(s.start_time) - 8 * 60;
-                      const endMin = hourToMin(s.end_time) - 8 * 60;
-                      const totalMin = 11 * 60;
-                      const left = (startMin / totalMin) * 100;
-                      const width = ((endMin - startMin) / totalMin) * 100;
-                      return (
-                        <button
-                          key={s.id}
-                          onClick={() => openSubject(s)}
-                          className={`absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-2 overflow-hidden backdrop-blur-sm shadow-md hover:shadow-glow transition-all cursor-pointer text-left hover:scale-[1.02] hover:z-10`}
-                          style={{ left: `${left}%`, width: `${width}%` }}
-                          title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}\nคลิกเพื่อดูงาน`}
-                        >
-                          <div className="text-[11px] font-bold truncate text-foreground">{s.subjects?.code}</div>
-                          <div className="text-[10px] text-foreground/90 truncate">{s.subjects?.name}</div>
-                          <div className="text-[9px] text-foreground/70 truncate">
-                            {s.start_time.slice(0, 5)}–{s.end_time.slice(0, 5)} · {s.rooms?.name}
-                          </div>
-                        </button>
-                      );
-                    })}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* List view */}
