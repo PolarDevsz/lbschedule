@@ -126,12 +126,12 @@ function SchedulePage() {
   };
 
   const colors = [
-    "from-cyan-500/40 to-teal-500/40 border-cyan-400/60 hover:from-cyan-500/60 hover:to-teal-500/60",
-    "from-violet-500/40 to-purple-500/40 border-violet-400/60 hover:from-violet-500/60 hover:to-purple-500/60",
-    "from-amber-500/40 to-orange-500/40 border-amber-400/60 hover:from-amber-500/60 hover:to-orange-500/60",
-    "from-rose-500/40 to-pink-500/40 border-rose-400/60 hover:from-rose-500/60 hover:to-pink-500/60",
-    "from-emerald-500/40 to-green-500/40 border-emerald-400/60 hover:from-emerald-500/60 hover:to-green-500/60",
-    "from-blue-500/40 to-indigo-500/40 border-blue-400/60 hover:from-blue-500/60 hover:to-indigo-500/60",
+    "from-cyan-500/25 to-teal-500/25 border-cyan-400/50 hover:from-cyan-500/55 hover:to-teal-500/55",
+    "from-violet-500/25 to-purple-500/25 border-violet-400/50 hover:from-violet-500/55 hover:to-purple-500/55",
+    "from-amber-500/25 to-orange-500/25 border-amber-400/50 hover:from-amber-500/55 hover:to-orange-500/55",
+    "from-rose-500/25 to-pink-500/25 border-rose-400/50 hover:from-rose-500/55 hover:to-pink-500/55",
+    "from-emerald-500/25 to-green-500/25 border-emerald-400/50 hover:from-emerald-500/55 hover:to-green-500/55",
+    "from-blue-500/25 to-indigo-500/25 border-blue-400/50 hover:from-blue-500/55 hover:to-indigo-500/55",
   ];
 
   const openSubject = (s: ScheduleRow) => {
