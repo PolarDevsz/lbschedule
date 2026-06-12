@@ -202,11 +202,11 @@ function SchedulePage() {
               {DAYS.map((d, idx) => (
                 <div key={d} className="contents">
                   <div
-                    className={`text-sm font-semibold py-4 px-3 flex items-center border-b border-r border-border bg-muted/20 ${
+                    className={`text-[11px] sm:text-sm font-semibold py-3 sm:py-4 px-1.5 sm:px-3 flex items-center border-b border-r border-border bg-muted/20 ${
                       idx === DAYS.length - 1 ? "rounded-bl-lg border-b-0" : ""
                     }`}
                   >
-                    {d}
+                    <span className="truncate">{d}</span>
                   </div>
                   <div
                     className={`col-span-11 relative h-20 border-b border-border ${
