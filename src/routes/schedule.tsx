@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CalendarDays } from "lucide-react";
 import { SubjectAssignmentsDialog } from "@/components/SubjectAssignmentsDialog";
+import { toast } from "sonner";
 
 type Search = { major?: string };
 const DAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
@@ -39,6 +40,33 @@ function SchedulePage() {
   const [yearFilter, setYearFilter] = useState<string>("all");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [activeSubject, setActiveSubject] = useState<{ id: string; code?: string; name?: string } | null>(null);
+  const queryClient = useQueryClient();
+
+  // Realtime: auto-refresh schedule and assignments on any change
+  useEffect(() => {
+    const channel = supabase
+      .channel("schedule-live")
+      .on("postgres_changes", { event: "*", schema: "public", table: "schedules" }, (payload) => {
+        queryClient.invalidateQueries({ queryKey: ["schedules"] });
+        const evt = payload.eventType;
+        if (evt === "INSERT") toast.success("มีการเพิ่มตารางเรียนใหม่", { description: "อัปเดตหน้าจออัตโนมัติ" });
+        else if (evt === "UPDATE") toast("ตารางเรียนถูกอัปเดต");
+        else if (evt === "DELETE") toast("ตารางเรียนถูกลบ");
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "assignments" }, (payload) => {
+        queryClient.invalidateQueries({ queryKey: ["assignment-counts"] });
+        queryClient.invalidateQueries({ queryKey: ["assignments"] });
+        const evt = payload.eventType;
+        if (evt === "INSERT") toast.success("มีงานใหม่ถูกเพิ่ม", { description: "ไอคอนการแจ้งเตือนถูกอัปเดต" });
+        else if (evt === "UPDATE") toast("งานถูกอัปเดต");
+        else if (evt === "DELETE") toast("งานถูกลบออก");
+      })
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+
 
   const { data: majors = [] } = useQuery({
     queryKey: ["majors"],
@@ -98,12 +126,12 @@ function SchedulePage() {
   };
 
   const colors = [
-    "from-cyan-500/40 to-teal-500/40 border-cyan-400/60 hover:from-cyan-500/60 hover:to-teal-500/60",
-    "from-violet-500/40 to-purple-500/40 border-violet-400/60 hover:from-violet-500/60 hover:to-purple-500/60",
-    "from-amber-500/40 to-orange-500/40 border-amber-400/60 hover:from-amber-500/60 hover:to-orange-500/60",
-    "from-rose-500/40 to-pink-500/40 border-rose-400/60 hover:from-rose-500/60 hover:to-pink-500/60",
-    "from-emerald-500/40 to-green-500/40 border-emerald-400/60 hover:from-emerald-500/60 hover:to-green-500/60",
-    "from-blue-500/40 to-indigo-500/40 border-blue-400/60 hover:from-blue-500/60 hover:to-indigo-500/60",
+    "from-cyan-500/25 to-teal-500/25 border-cyan-400/50 hover:from-cyan-500/55 hover:to-teal-500/55",
+    "from-violet-500/25 to-purple-500/25 border-violet-400/50 hover:from-violet-500/55 hover:to-purple-500/55",
+    "from-amber-500/25 to-orange-500/25 border-amber-400/50 hover:from-amber-500/55 hover:to-orange-500/55",
+    "from-rose-500/25 to-pink-500/25 border-rose-400/50 hover:from-rose-500/55 hover:to-pink-500/55",
+    "from-emerald-500/25 to-green-500/25 border-emerald-400/50 hover:from-emerald-500/55 hover:to-green-500/55",
+    "from-blue-500/25 to-indigo-500/25 border-blue-400/50 hover:from-blue-500/55 hover:to-indigo-500/55",
   ];
 
   const openSubject = (s: ScheduleRow) => {
@@ -138,7 +166,7 @@ function SchedulePage() {
           <SelectTrigger className="w-full sm:w-40"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">ทุกชั้นปี</SelectItem>
-            {[1, 2, 3, 4].map((y) => (
+            {[1, 2, 3].map((y) => (
               <SelectItem key={y} value={String(y)}>ชั้นปีที่ {y}</SelectItem>
             ))}
           </SelectContent>
@@ -154,8 +182,8 @@ function SchedulePage() {
       ) : (
         <>
           <p className="md:hidden text-xs text-muted-foreground mb-2">← เลื่อนแนวนอนเพื่อดูตารางทั้งหมด →</p>
-          <div className="rounded-2xl bg-card/60 border-2 border-border backdrop-blur-xl p-3 sm:p-4 overflow-x-auto shadow-card">
-            <div className="min-w-[1000px] grid grid-cols-[90px_repeat(11,minmax(80px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
+          <div className="rounded-2xl bg-card/60 border-2 border-border backdrop-blur-xl p-2 sm:p-4 overflow-x-auto shadow-card animate-float-in">
+            <div className="min-w-[760px] sm:min-w-[1000px] grid grid-cols-[68px_repeat(11,minmax(56px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
               {/* header */}
               <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-r border-border bg-muted/40 rounded-tl-lg">
                 วัน / เวลา
@@ -174,11 +202,11 @@ function SchedulePage() {
               {DAYS.map((d, idx) => (
                 <div key={d} className="contents">
                   <div
-                    className={`text-sm font-semibold py-4 px-3 flex items-center border-b border-r border-border bg-muted/20 ${
+                    className={`text-[11px] sm:text-sm font-semibold py-3 sm:py-4 px-1.5 sm:px-3 flex items-center border-b border-r border-border bg-muted/20 ${
                       idx === DAYS.length - 1 ? "rounded-bl-lg border-b-0" : ""
                     }`}
                   >
-                    {d}
+                    <span className="truncate">{d}</span>
                   </div>
                   <div
                     className={`col-span-11 relative h-20 border-b border-border ${
@@ -186,7 +214,7 @@ function SchedulePage() {
                     } ${idx % 2 === 0 ? "bg-muted/10" : ""}`}
                     style={{
                       backgroundImage:
-                        "repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px calc(100%/11))",
+                        "repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px calc(100%/11)), repeating-linear-gradient(to right, color-mix(in oklab, var(--grid-line) 55%, transparent) 0 1px, transparent 1px calc(100%/22))",
                     }}
                   >
                     {schedules
@@ -204,8 +232,8 @@ function SchedulePage() {
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`group absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-2 overflow-hidden backdrop-blur-sm shadow-md hover:shadow-glow transition-all cursor-pointer text-left hover:scale-[1.03] hover:z-10`}
-                            style={{ left: `${left}%`, width: `${width}%` }}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-1.5 sm:p-2 overflow-hidden backdrop-blur-md shadow-md hover:shadow-glow transition-all duration-300 cursor-pointer text-left hover:scale-[1.04] hover:z-10 animate-float-in`}
+                            style={{ left: `${left}%`, width: `${width}%`, animationDelay: `${i * 40}ms` }}
                             title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
                             {/* shine sweep on hover */}
