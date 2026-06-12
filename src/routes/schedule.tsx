@@ -214,7 +214,7 @@ function SchedulePage() {
                     } ${idx % 2 === 0 ? "bg-muted/10" : ""}`}
                     style={{
                       backgroundImage:
-                        "repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px calc(100%/11))",
+                        "repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px calc(100%/11)), repeating-linear-gradient(to right, color-mix(in oklab, var(--grid-line) 55%, transparent) 0 1px, transparent 1px calc(100%/22))",
                     }}
                   >
                     {schedules
