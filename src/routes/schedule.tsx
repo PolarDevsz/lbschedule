@@ -232,8 +232,8 @@ function SchedulePage() {
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`group absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-2 overflow-hidden backdrop-blur-sm shadow-md hover:shadow-glow transition-all cursor-pointer text-left hover:scale-[1.03] hover:z-10`}
-                            style={{ left: `${left}%`, width: `${width}%` }}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-1.5 sm:p-2 overflow-hidden backdrop-blur-md shadow-md hover:shadow-glow transition-all duration-300 cursor-pointer text-left hover:scale-[1.04] hover:z-10 animate-float-in`}
+                            style={{ left: `${left}%`, width: `${width}%`, animationDelay: `${i * 40}ms` }}
                             title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
                             {/* shine sweep on hover */}
