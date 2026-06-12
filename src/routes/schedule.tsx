@@ -166,7 +166,7 @@ function SchedulePage() {
           <SelectTrigger className="w-full sm:w-40"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">ทุกชั้นปี</SelectItem>
-            {[1, 2, 3, 4].map((y) => (
+            {[1, 2, 3].map((y) => (
               <SelectItem key={y} value={String(y)}>ชั้นปีที่ {y}</SelectItem>
             ))}
           </SelectContent>
