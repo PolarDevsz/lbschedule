@@ -40,6 +40,33 @@ function SchedulePage() {
   const [yearFilter, setYearFilter] = useState<string>("all");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [activeSubject, setActiveSubject] = useState<{ id: string; code?: string; name?: string } | null>(null);
+  const queryClient = useQueryClient();
+
+  // Realtime: auto-refresh schedule and assignments on any change
+  useEffect(() => {
+    const channel = supabase
+      .channel("schedule-live")
+      .on("postgres_changes", { event: "*", schema: "public", table: "schedules" }, (payload) => {
+        queryClient.invalidateQueries({ queryKey: ["schedules"] });
+        const evt = payload.eventType;
+        if (evt === "INSERT") toast.success("มีการเพิ่มตารางเรียนใหม่", { description: "อัปเดตหน้าจออัตโนมัติ" });
+        else if (evt === "UPDATE") toast("ตารางเรียนถูกอัปเดต");
+        else if (evt === "DELETE") toast("ตารางเรียนถูกลบ");
+      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "assignments" }, (payload) => {
+        queryClient.invalidateQueries({ queryKey: ["assignment-counts"] });
+        queryClient.invalidateQueries({ queryKey: ["assignments"] });
+        const evt = payload.eventType;
+        if (evt === "INSERT") toast.success("มีงานใหม่ถูกเพิ่ม", { description: "ไอคอนการแจ้งเตือนถูกอัปเดต" });
+        else if (evt === "UPDATE") toast("งานถูกอัปเดต");
+        else if (evt === "DELETE") toast("งานถูกลบออก");
+      })
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+
 
   const { data: majors = [] } = useQuery({
     queryKey: ["majors"],
