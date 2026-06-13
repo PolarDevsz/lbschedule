@@ -12,6 +12,13 @@ import { toast } from "sonner";
 import { Shield, Plus, Trash2 } from "lucide-react";
 
 const DAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+const WEEKDAYS = [
+  { label: "จันทร์", dbIndex: 1 },
+  { label: "อังคาร", dbIndex: 2 },
+  { label: "พุธ", dbIndex: 3 },
+  { label: "พฤหัสบดี", dbIndex: 4 },
+  { label: "ศุกร์", dbIndex: 5 },
+];
 
 export const Route = createFileRoute("/_authenticated/admin")({
   ssr: false,
