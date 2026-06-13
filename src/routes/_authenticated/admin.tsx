@@ -283,7 +283,7 @@ function SchedulesAdmin() {
               <Label>วัน</Label>
               <Select value={form.day_of_week} onValueChange={(v) => setForm({ ...form, day_of_week: v })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>{DAYS.map((d, i) => <SelectItem key={i} value={String(i)}>{d}</SelectItem>)}</SelectContent>
+                <SelectContent>{WEEKDAYS.map((d) => <SelectItem key={d.dbIndex} value={String(d.dbIndex)}>{d.label}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div className="space-y-1.5">
