@@ -212,11 +212,13 @@ function SchedulePage() {
                     className={`col-span-11 relative h-20 border-b border-border ${
                       idx === DAYS.length - 1 ? "border-b-0" : ""
                     } ${idx % 2 === 0 ? "bg-muted/10" : ""}`}
-                    style={{
-                      backgroundImage:
-                        "repeating-linear-gradient(to right, var(--grid-line) 0 1px, transparent 1px calc(100%/11)), repeating-linear-gradient(to right, color-mix(in oklab, var(--grid-line) 55%, transparent) 0 1px, transparent 1px calc(100%/22))",
-                    }}
                   >
+                    {/* vertical hour gridlines */}
+                    <div className="pointer-events-none absolute inset-0 grid grid-cols-11">
+                      {HOURS.map((h) => (
+                        <div key={h} className="border-l border-border/60 first:border-l-0" />
+                      ))}
+                    </div>
                     {schedules
                       .filter((s) => s.day_of_week === idx)
                       .map((s, i) => {
