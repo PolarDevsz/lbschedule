@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Calendar, LogIn, UserPlus, Menu, X } from "lucide-react";
+import { Calendar, LogIn, UserPlus, LogOut, User, Shield, Menu, X } from "lucide-react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { UserMenu } from "@/components/UserMenu";
