@@ -12,6 +12,13 @@ import { toast } from "sonner";
 import { Shield, Plus, Trash2 } from "lucide-react";
 
 const DAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+const WEEKDAYS = [
+  { label: "จันทร์", dbIndex: 1 },
+  { label: "อังคาร", dbIndex: 2 },
+  { label: "พุธ", dbIndex: 3 },
+  { label: "พฤหัสบดี", dbIndex: 4 },
+  { label: "ศุกร์", dbIndex: 5 },
+];
 
 export const Route = createFileRoute("/_authenticated/admin")({
   ssr: false,
@@ -276,7 +283,7 @@ function SchedulesAdmin() {
               <Label>วัน</Label>
               <Select value={form.day_of_week} onValueChange={(v) => setForm({ ...form, day_of_week: v })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>{DAYS.map((d, i) => <SelectItem key={i} value={String(i)}>{d}</SelectItem>)}</SelectContent>
+                <SelectContent>{WEEKDAYS.map((d) => <SelectItem key={d.dbIndex} value={String(d.dbIndex)}>{d.label}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div className="space-y-1.5">

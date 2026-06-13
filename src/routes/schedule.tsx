@@ -9,6 +9,13 @@ import { toast } from "sonner";
 
 type Search = { major?: string };
 const DAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+const WEEKDAYS = [
+  { label: "จันทร์", dbIndex: 1 },
+  { label: "อังคาร", dbIndex: 2 },
+  { label: "พุธ", dbIndex: 3 },
+  { label: "พฤหัสบดี", dbIndex: 4 },
+  { label: "ศุกร์", dbIndex: 5 },
+];
 const HOURS = Array.from({ length: 11 }, (_, i) => i + 8); // 8:00 - 18:00
 
 export const Route = createFileRoute("/schedule")({
@@ -199,18 +206,18 @@ function SchedulePage() {
                 </div>
               ))}
 
-              {DAYS.map((d, idx) => (
-                <div key={d} className="contents">
+              {WEEKDAYS.map((d, idx) => (
+                <div key={d.label} className="contents">
                   <div
                     className={`text-[11px] sm:text-sm font-semibold py-3 sm:py-4 px-1.5 sm:px-3 flex items-center border-b border-r border-border bg-muted/20 ${
-                      idx === DAYS.length - 1 ? "rounded-bl-lg border-b-0" : ""
+                      idx === WEEKDAYS.length - 1 ? "rounded-bl-lg border-b-0" : ""
                     }`}
                   >
-                    <span className="truncate">{d}</span>
+                    <span className="truncate">{d.label}</span>
                   </div>
                   <div
                     className={`col-span-11 relative h-20 border-b border-border ${
-                      idx === DAYS.length - 1 ? "border-b-0" : ""
+                      idx === WEEKDAYS.length - 1 ? "border-b-0" : ""
                     } ${idx % 2 === 0 ? "bg-muted/10" : ""}`}
                   >
                     {/* vertical hour gridlines */}
@@ -220,7 +227,7 @@ function SchedulePage() {
                       ))}
                     </div>
                     {schedules
-                      .filter((s) => s.day_of_week === idx)
+                      .filter((s) => s.day_of_week === d.dbIndex)
                       .map((s, i) => {
                         const startMin = hourToMin(s.start_time) - 8 * 60;
                         const endMin = hourToMin(s.end_time) - 8 * 60;
