@@ -54,42 +54,27 @@ export function Header() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-2">
           <Link to="/schedule">
-            <Button variant="ghost" size="sm">ตารางเรียน</Button>
+            <Button variant="ghost" size="sm" className="transition-all hover:scale-105">ตารางเรียน</Button>
           </Link>
+          <ThemeToggle />
           {user ? (
-            <>
-              {isAdmin && (
-                <Link to="/admin">
-                  <Button variant="ghost" size="sm" className="gap-1.5">
-                    <Shield className="h-4 w-4" /> ผู้ดูแล
-                  </Button>
-                </Link>
-              )}
-              <Link to="/profile">
-                <Button variant="ghost" size="sm" className="gap-1.5">
-                  <User className="h-4 w-4" /> โปรไฟล์
-                </Button>
-              </Link>
-              <Button variant="outline" size="sm" onClick={handleSignOut} className="gap-1.5">
-                <LogOut className="h-4 w-4" /> ออกจากระบบ
-              </Button>
-            </>
+            <UserMenu user={user} isAdmin={isAdmin} onSignOut={handleSignOut} />
           ) : (
             <>
               <Link to="/auth" search={{ mode: "login" } as never}>
-                <Button variant="ghost" size="sm" className="gap-1.5">
+                <Button variant="ghost" size="sm" className="gap-1.5 transition-all hover:scale-105">
                   <LogIn className="h-4 w-4" /> เข้าสู่ระบบ
                 </Button>
               </Link>
               <Link to="/auth" search={{ mode: "register" } as never}>
-                <Button size="sm" className="gap-1.5 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+                <Button size="sm" className="gap-1.5 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-all hover:scale-105 shadow-glow">
                   <UserPlus className="h-4 w-4" /> สมัครสมาชิก
                 </Button>
               </Link>
             </>
           )}
-          <ThemeToggle />
         </nav>
+
 
         {/* Mobile controls */}
         <div className="flex md:hidden items-center gap-1">
