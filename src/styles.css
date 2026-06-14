@@ -193,7 +193,34 @@
 }
 .hover-lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
 
-button, a { transition: color 200ms ease, background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease, opacity 200ms ease; }
+button, a { transition: color 220ms ease, background-color 220ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease, opacity 200ms ease, border-color 220ms ease; }
+button:active { transform: scale(0.97); }
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(from var(--primary) l c h / 0.0); }
+  50% { box-shadow: 0 0 24px 4px oklch(from var(--primary) l c h / 0.35); }
+}
+.animate-glow-pulse { animation: glow-pulse 2.4s ease-in-out infinite; }
+
+@keyframes subtle-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+.animate-bob { animation: subtle-bob 3s ease-in-out infinite; }
+
+@keyframes stagger-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-stagger-in { animation: stagger-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* smoother dialog/select content */
+[data-radix-popper-content-wrapper] > * { animation: float-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* table row hover lift */
+tbody tr { transition: background-color 200ms ease, transform 200ms ease; }
+tbody tr:hover { transform: translateX(2px); }
+
 
 @utility text-gradient-teal {
   background: var(--gradient-teal);
