@@ -218,9 +218,120 @@ button:active { transform: scale(0.97); }
 [data-radix-popper-content-wrapper] > * { animation: float-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
 /* table row hover lift */
-tbody tr { transition: background-color 200ms ease, transform 200ms ease; }
-tbody tr:hover { transform: translateX(2px); }
+tbody tr { transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease; }
+tbody tr:hover { transform: translateX(2px); box-shadow: inset 3px 0 0 0 var(--primary); }
 
+/* === MEGA ANIMATIONS PACK === */
+@keyframes shimmer-bg {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+@keyframes blur-in {
+  0% { opacity: 0; filter: blur(8px); transform: translateY(6px); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+@keyframes slide-in-left {
+  0% { opacity: 0; transform: translateX(-16px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(16px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes bounce-in {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { opacity: 1; transform: scale(1.05); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+@keyframes border-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-blur-in { animation: blur-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-in-left { animation: slide-in-left 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-in-right { animation: slide-in-right 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-bounce-in { animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-float-y { animation: float-y 3.5s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 8s linear infinite; }
+.animate-wiggle:hover { animation: wiggle 0.5s ease-in-out; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, oklch(from var(--primary) l c h / 0.15), transparent);
+  background-size: 200% 100%;
+  animation: shimmer-bg 2.2s linear infinite;
+}
+
+/* Global polish */
+* { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+html { scroll-behavior: smooth; }
+
+/* Inputs glow on focus */
+input, textarea, select, [role="combobox"] {
+  transition: border-color 220ms ease, box-shadow 260ms ease, transform 200ms ease, background-color 220ms ease;
+}
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  box-shadow: 0 0 0 3px oklch(from var(--ring) l c h / 0.25), 0 0 18px -4px oklch(from var(--primary) l c h / 0.4);
+}
+
+/* Cards lift + glow */
+[class*="rounded"][class*="border"], .card, [data-slot="card"] {
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 320ms ease, border-color 320ms ease;
+}
+
+/* Buttons get a sheen on hover */
+button {
+  position: relative;
+  overflow: hidden;
+}
+button:hover { box-shadow: 0 4px 18px -6px oklch(from var(--primary) l c h / 0.45); }
+
+/* Links underline grow */
+a:not([class*="button"]):not([data-slot]) {
+  background-image: linear-gradient(var(--primary), var(--primary));
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+a:not([class*="button"]):not([data-slot]):hover { background-size: 100% 1.5px; }
+
+/* Dialog/sheet smoother */
+[data-state="open"][data-slot="dialog-content"],
+[data-state="open"][role="dialog"] {
+  animation: bounce-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* SVG icons subtle scale on parent hover */
+button:hover > svg, a:hover > svg { transform: scale(1.1) rotate(-2deg); }
+svg { transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Page-level entrance */
+main, [role="main"] { animation: blur-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 @utility text-gradient-teal {
   background: var(--gradient-teal);
