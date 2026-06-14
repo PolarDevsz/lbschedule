@@ -8,7 +8,7 @@ import { SubjectAssignmentsDialog } from "@/components/SubjectAssignmentsDialog"
 import { toast } from "sonner";
 
 type Search = { major?: string };
-const DAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+
 const WEEKDAYS = [
   { label: "จันทร์", dbIndex: 1 },
   { label: "อังคาร", dbIndex: 2 },
@@ -285,8 +285,6 @@ function SchedulePage() {
             <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
                 <tr>
-                  <th className="text-left p-3">วัน</th>
-                  <th className="text-left p-3">เวลา</th>
                   <th className="text-left p-3">รหัสวิชา</th>
                   <th className="text-left p-3">ชื่อวิชา</th>
                   <th className="text-left p-3">ผู้สอน</th>
@@ -304,8 +302,6 @@ function SchedulePage() {
                       className="border-t border-border/40 hover:bg-muted/30 cursor-pointer animate-stagger-in"
                       style={{ animationDelay: `${Math.min(idx * 30, 400)}ms` }}
                     >
-                      <td className="p-3 whitespace-nowrap">{DAYS[s.day_of_week]}</td>
-                      <td className="p-3 whitespace-nowrap">{s.start_time.slice(0, 5)} - {s.end_time.slice(0, 5)}</td>
                       <td className="p-3 font-mono text-xs whitespace-nowrap">{s.subjects?.code}</td>
                       <td className="p-3 whitespace-nowrap">
                         <span className="inline-flex items-center gap-2">
