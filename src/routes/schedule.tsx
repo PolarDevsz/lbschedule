@@ -149,11 +149,11 @@ function SchedulePage() {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow">
+      <div className="flex items-center gap-3 mb-2 animate-slide-down">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow animate-glow-pulse">
           <CalendarDays className="h-5 w-5 text-primary-foreground" />
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold">ตารางเรียน</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-gradient-teal">ตารางเรียน</h1>
       </div>
       <p className="text-muted-foreground mb-6 text-sm">
         เลือกสาขาวิชาและชั้นปีเพื่อแสดงตารางเรียน · คลิกที่วิชาเพื่อดู/เพิ่มงาน
@@ -190,7 +190,7 @@ function SchedulePage() {
         <>
           <p className="md:hidden text-xs text-muted-foreground mb-2">← เลื่อนแนวนอนเพื่อดูตารางทั้งหมด →</p>
           <div className="rounded-2xl bg-card/60 border-2 border-border backdrop-blur-xl p-2 sm:p-4 overflow-x-auto shadow-card animate-float-in">
-            <div className="min-w-[760px] sm:min-w-[1000px] grid grid-cols-[68px_repeat(11,minmax(56px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
+            <div className="min-w-[820px] sm:min-w-[1000px] grid grid-cols-[92px_repeat(11,minmax(60px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
               {/* header */}
               <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-r border-border bg-muted/40 rounded-tl-lg">
                 วัน / เวลา
@@ -295,30 +295,31 @@ function SchedulePage() {
                 </tr>
               </thead>
               <tbody>
-                {schedules.map((s) => {
+                {schedules.map((s, idx) => {
                   const counts = s.subjects ? assignmentCounts[s.subjects.id] : undefined;
                   return (
                     <tr
                       key={s.id}
                       onClick={() => openSubject(s)}
-                      className="border-t border-border/40 hover:bg-muted/30 cursor-pointer transition-colors"
+                      className="border-t border-border/40 hover:bg-muted/30 cursor-pointer animate-stagger-in"
+                      style={{ animationDelay: `${Math.min(idx * 30, 400)}ms` }}
                     >
-                      <td className="p-3">{DAYS[s.day_of_week]}</td>
+                      <td className="p-3 whitespace-nowrap">{DAYS[s.day_of_week]}</td>
                       <td className="p-3 whitespace-nowrap">{s.start_time.slice(0, 5)} - {s.end_time.slice(0, 5)}</td>
-                      <td className="p-3 font-mono text-xs">{s.subjects?.code}</td>
-                      <td className="p-3">
+                      <td className="p-3 font-mono text-xs whitespace-nowrap">{s.subjects?.code}</td>
+                      <td className="p-3 whitespace-nowrap">
                         <span className="inline-flex items-center gap-2">
-                          {s.subjects?.name}
+                          <span className="truncate max-w-[260px]">{s.subjects?.name}</span>
                           {counts && counts.total > 0 && (
-                            <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border ${counts.overdue > 0 ? "bg-destructive/15 text-destructive border-destructive/40" : "bg-primary/15 text-primary border-primary/40"}`}>
+                            <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border whitespace-nowrap ${counts.overdue > 0 ? "bg-destructive/15 text-destructive border-destructive/40" : "bg-primary/15 text-primary border-primary/40"}`}>
                               <span className={`h-1.5 w-1.5 rounded-full ${counts.overdue > 0 ? "bg-destructive animate-pulse" : "bg-primary"}`} />
                               {counts.total} งาน{counts.overdue > 0 ? ` · เลย ${counts.overdue}` : ""}
                             </span>
                           )}
                         </span>
                       </td>
-                      <td className="p-3 text-muted-foreground">{s.teachers?.name}</td>
-                      <td className="p-3 text-muted-foreground">{s.rooms?.name}</td>
+                      <td className="p-3 text-muted-foreground whitespace-nowrap">{s.teachers?.name}</td>
+                      <td className="p-3 text-muted-foreground whitespace-nowrap">{s.rooms?.name}</td>
                       <td className="p-3 text-muted-foreground whitespace-nowrap">ปี {s.year} / {s.section}</td>
                     </tr>
                   );
