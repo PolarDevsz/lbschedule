@@ -302,8 +302,6 @@ function SchedulePage() {
                       className="border-t border-border/40 hover:bg-muted/30 cursor-pointer animate-stagger-in"
                       style={{ animationDelay: `${Math.min(idx * 30, 400)}ms` }}
                     >
-                      <td className="p-3 whitespace-nowrap">{DAYS[s.day_of_week]}</td>
-                      <td className="p-3 whitespace-nowrap">{s.start_time.slice(0, 5)} - {s.end_time.slice(0, 5)}</td>
                       <td className="p-3 font-mono text-xs whitespace-nowrap">{s.subjects?.code}</td>
                       <td className="p-3 whitespace-nowrap">
                         <span className="inline-flex items-center gap-2">
