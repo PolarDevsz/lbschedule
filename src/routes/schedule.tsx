@@ -8,7 +8,7 @@ import { SubjectAssignmentsDialog } from "@/components/SubjectAssignmentsDialog"
 import { toast } from "sonner";
 
 type Search = { major?: string };
-const DAYS = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+
 const WEEKDAYS = [
   { label: "จันทร์", dbIndex: 1 },
   { label: "อังคาร", dbIndex: 2 },
