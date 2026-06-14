@@ -190,7 +190,7 @@ function SchedulePage() {
         <>
           <p className="md:hidden text-xs text-muted-foreground mb-2">← เลื่อนแนวนอนเพื่อดูตารางทั้งหมด →</p>
           <div className="rounded-2xl bg-card/60 border-2 border-border backdrop-blur-xl p-2 sm:p-4 overflow-x-auto shadow-card animate-float-in">
-            <div className="min-w-[760px] sm:min-w-[1000px] grid grid-cols-[68px_repeat(11,minmax(56px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
+            <div className="min-w-[820px] sm:min-w-[1000px] grid grid-cols-[92px_repeat(11,minmax(60px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
               {/* header */}
               <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-r border-border bg-muted/40 rounded-tl-lg">
                 วัน / เวลา
