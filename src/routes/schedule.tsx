@@ -303,22 +303,22 @@ function SchedulePage() {
                       onClick={() => openSubject(s)}
                       className="border-t border-border/40 hover:bg-muted/30 cursor-pointer transition-colors"
                     >
-                      <td className="p-3">{DAYS[s.day_of_week]}</td>
+                      <td className="p-3 whitespace-nowrap">{DAYS[s.day_of_week]}</td>
                       <td className="p-3 whitespace-nowrap">{s.start_time.slice(0, 5)} - {s.end_time.slice(0, 5)}</td>
-                      <td className="p-3 font-mono text-xs">{s.subjects?.code}</td>
-                      <td className="p-3">
+                      <td className="p-3 font-mono text-xs whitespace-nowrap">{s.subjects?.code}</td>
+                      <td className="p-3 whitespace-nowrap">
                         <span className="inline-flex items-center gap-2">
-                          {s.subjects?.name}
+                          <span className="truncate max-w-[260px]">{s.subjects?.name}</span>
                           {counts && counts.total > 0 && (
-                            <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border ${counts.overdue > 0 ? "bg-destructive/15 text-destructive border-destructive/40" : "bg-primary/15 text-primary border-primary/40"}`}>
+                            <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border whitespace-nowrap ${counts.overdue > 0 ? "bg-destructive/15 text-destructive border-destructive/40" : "bg-primary/15 text-primary border-primary/40"}`}>
                               <span className={`h-1.5 w-1.5 rounded-full ${counts.overdue > 0 ? "bg-destructive animate-pulse" : "bg-primary"}`} />
                               {counts.total} งาน{counts.overdue > 0 ? ` · เลย ${counts.overdue}` : ""}
                             </span>
                           )}
                         </span>
                       </td>
-                      <td className="p-3 text-muted-foreground">{s.teachers?.name}</td>
-                      <td className="p-3 text-muted-foreground">{s.rooms?.name}</td>
+                      <td className="p-3 text-muted-foreground whitespace-nowrap">{s.teachers?.name}</td>
+                      <td className="p-3 text-muted-foreground whitespace-nowrap">{s.rooms?.name}</td>
                       <td className="p-3 text-muted-foreground whitespace-nowrap">ปี {s.year} / {s.section}</td>
                     </tr>
                   );
