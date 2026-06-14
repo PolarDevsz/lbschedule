@@ -285,8 +285,6 @@ function SchedulePage() {
             <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
                 <tr>
-                  <th className="text-left p-3">วัน</th>
-                  <th className="text-left p-3">เวลา</th>
                   <th className="text-left p-3">รหัสวิชา</th>
                   <th className="text-left p-3">ชื่อวิชา</th>
                   <th className="text-left p-3">ผู้สอน</th>
