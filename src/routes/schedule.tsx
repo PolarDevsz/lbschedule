@@ -149,11 +149,11 @@ function SchedulePage() {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow">
+      <div className="flex items-center gap-3 mb-2 animate-slide-down">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow animate-glow-pulse">
           <CalendarDays className="h-5 w-5 text-primary-foreground" />
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold">ตารางเรียน</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-gradient-teal">ตารางเรียน</h1>
       </div>
       <p className="text-muted-foreground mb-6 text-sm">
         เลือกสาขาวิชาและชั้นปีเพื่อแสดงตารางเรียน · คลิกที่วิชาเพื่อดู/เพิ่มงาน
