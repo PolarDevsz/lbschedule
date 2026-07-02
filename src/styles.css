@@ -162,15 +162,51 @@
 
 }
 
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html, body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+  }
+
+  body { min-height: 100vh; }
+
+  /* Typographic rhythm */
+  h1 { font-size: var(--text-3xl); font-weight: 600; line-height: var(--leading-tight); letter-spacing: -0.01em; }
+  h2 { font-size: var(--text-2xl); font-weight: 600; line-height: var(--leading-tight); letter-spacing: -0.01em; }
+  h3 { font-size: var(--text-lg); font-weight: 600; line-height: var(--leading-tight); }
+  p  { line-height: var(--leading-relaxed); }
+
+  /* Consistent, accessible focus ring across all interactive elements */
+  :where(a, button, [role="button"], input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+  :focus:not(:focus-visible) { outline: none; }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 30%, transparent);
+    color: var(--foreground);
+  }
+}
+
 @keyframes fade-in {
   0% { opacity: 0; transform: translateY(4px); }
   100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 currentColor; opacity: 0.6; }
-  70% { box-shadow: 0 0 0 5px transparent; opacity: 0; }
-  100% { box-shadow: 0 0 0 0 transparent; opacity: 0; }
 }
 
 .animate-float-in,
@@ -184,12 +220,9 @@
 /* Subtle table row hover */
 tbody tr { transition: background-color 150ms ease; }
 
-/* Focus ring for form controls (accessibility) */
+/* Form control transitions */
 input, textarea, select {
   transition: border-color 150ms ease, box-shadow 150ms ease;
-}
-input:focus-visible, textarea:focus-visible, select:focus-visible {
-  box-shadow: 0 0 0 2px oklch(from var(--ring) l c h / 0.35);
 }
 
 /* Respect reduced motion */
@@ -200,6 +233,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .animate-ping, .animate-pulse { animation: none !important; }
 }
 
 @utility text-gradient-teal {
@@ -209,5 +243,6 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
 @utility shadow-glow {
   box-shadow: 0 1px 2px 0 oklch(0 0 0 / 0.05);
 }
+
 
 
