@@ -195,17 +195,17 @@ function SchedulePage() {
       ) : (
         <>
           <p className="md:hidden text-xs text-muted-foreground mb-2">← เลื่อนแนวนอนเพื่อดูตารางทั้งหมด →</p>
-          <div className="rounded-lg bg-card border-2 border-border backdrop-blur p-2 sm:p-4 overflow-x-auto shadow-sm ">
+          <div className="rounded-lg bg-card border border-border p-2 sm:p-4 overflow-x-auto shadow-sm">
             <div className="min-w-[820px] sm:min-w-[1000px] grid grid-cols-[92px_repeat(11,minmax(60px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
               {/* header */}
-              <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-r border-border bg-muted/40 rounded-tl-lg">
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground py-3 px-2 border-b border-r border-border bg-muted/40 rounded-tl-md">
                 วัน / เวลา
               </div>
               {HOURS.map((h, i) => (
                 <div
                   key={h}
-                  className={`text-xs font-semibold text-foreground/80 text-center py-3 border-b-2 border-l border-border bg-muted/40 ${
-                    i === HOURS.length - 1 ? "rounded-tr-lg" : ""
+                  className={`text-[11px] font-semibold tracking-wide text-foreground text-center py-3 border-b border-l border-border bg-muted/40 ${
+                    i === HOURS.length - 1 ? "rounded-tr-md" : ""
                   }`}
                 >
                   {String(h).padStart(2, "0")}:00
@@ -215,12 +215,13 @@ function SchedulePage() {
               {WEEKDAYS.map((d, idx) => (
                 <div key={d.label} className="contents">
                   <div
-                    className={`text-[11px] sm:text-sm font-semibold py-3 sm:py-4 px-1.5 sm:px-3 flex items-center border-b border-r border-border bg-muted/20 ${
-                      idx === WEEKDAYS.length - 1 ? "rounded-bl-lg border-b-0" : ""
+                    className={`text-xs sm:text-sm font-semibold text-foreground py-3 sm:py-4 px-2 sm:px-3 flex items-center border-b border-r border-border bg-muted/20 ${
+                      idx === WEEKDAYS.length - 1 ? "rounded-bl-md border-b-0" : ""
                     }`}
                   >
                     <span className="truncate">{d.label}</span>
                   </div>
+
                   <div
                     className={`col-span-11 relative h-20 border-b border-border ${
                       idx === WEEKDAYS.length - 1 ? "border-b-0" : ""
