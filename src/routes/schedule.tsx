@@ -133,13 +133,14 @@ function SchedulePage() {
   };
 
   const colors = [
-    "from-cyan-500/25 to-teal-500/25 border-cyan-400/50 hover:from-cyan-500/55 hover:to-teal-500/55",
-    "from-violet-500/25 to-purple-500/25 border-violet-400/50 hover:from-violet-500/55 hover:to-purple-500/55",
-    "from-amber-500/25 to-orange-500/25 border-amber-400/50 hover:from-amber-500/55 hover:to-orange-500/55",
-    "from-rose-500/25 to-pink-500/25 border-rose-400/50 hover:from-rose-500/55 hover:to-pink-500/55",
-    "from-emerald-500/25 to-green-500/25 border-emerald-400/50 hover:from-emerald-500/55 hover:to-green-500/55",
-    "from-blue-500/25 to-indigo-500/25 border-blue-400/50 hover:from-blue-500/55 hover:to-indigo-500/55",
+    "from-cyan-500/10 to-cyan-500/5 border-cyan-500/30 hover:bg-cyan-500/15",
+    "from-violet-500/10 to-violet-500/5 border-violet-500/30 hover:bg-violet-500/15",
+    "from-amber-500/10 to-amber-500/5 border-amber-500/30 hover:bg-amber-500/15",
+    "from-rose-500/10 to-rose-500/5 border-rose-500/30 hover:bg-rose-500/15",
+    "from-emerald-500/10 to-emerald-500/5 border-emerald-500/30 hover:bg-emerald-500/15",
+    "from-blue-500/10 to-blue-500/5 border-blue-500/30 hover:bg-blue-500/15",
   ];
+
 
   const openSubject = (s: ScheduleRow) => {
     if (!s.subjects) return;
