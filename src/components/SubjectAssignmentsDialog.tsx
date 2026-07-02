@@ -91,7 +91,7 @@ export function SubjectAssignmentsDialog({ open, onOpenChange, subject }: Props)
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-w-2xl max-h-[90vh] overflow-y-auto animate-float-in"
+        className="max-w-2xl max-h-[90vh] overflow-y-auto "
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <DialogHeader>

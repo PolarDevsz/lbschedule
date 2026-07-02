@@ -130,7 +130,7 @@ function ProfilePage() {
   const initials = (fullName || email || "?").slice(0, 2).toUpperCase();
 
   return (
-    <div className="container mx-auto px-4 py-10 max-w-2xl animate-float-in">
+    <div className="container mx-auto px-4 py-10 max-w-2xl ">
       <div className="flex items-center gap-3 mb-6">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-glow">
           <User className="h-5 w-5 text-primary-foreground" />
@@ -139,10 +139,10 @@ function ProfilePage() {
       </div>
 
       {/* Avatar card */}
-      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm mb-6 animate-float-in" style={{ animationDelay: "60ms" }}>
+      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm mb-6 " style={{ animationDelay: "60ms" }}>
         <div className="flex items-center gap-5">
           <div className="relative group">
-            <Avatar className="h-20 w-20 ring-2 ring-primary/40 shadow-glow transition-transform hover:scale-105">
+            <Avatar className="h-20 w-20 ring-2 ring-primary/40 transition-transform ">
               <AvatarImage src={signedAvatar ?? undefined} alt={fullName} />
               <AvatarFallback className="bg-primary text-primary-foreground text-lg font-bold">
                 {initials}
@@ -168,7 +168,7 @@ function ProfilePage() {
       </div>
 
       {/* Profile info */}
-      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm space-y-5 animate-float-in" style={{ animationDelay: "120ms" }}>
+      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm space-y-5 " style={{ animationDelay: "120ms" }}>
         <div className="space-y-2">
           <Label>อีเมล</Label>
           <Input value={email} disabled />
@@ -198,13 +198,13 @@ function ProfilePage() {
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleSave} disabled={saving} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:scale-[1.01]">
+        <Button onClick={handleSave} disabled={saving} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all ">
           {saving ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />กำลังบันทึก...</> : "บันทึก"}
         </Button>
       </div>
 
       {/* Security */}
-      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm mt-6 space-y-4 animate-float-in" style={{ animationDelay: "180ms" }}>
+      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm mt-6 space-y-4 " style={{ animationDelay: "180ms" }}>
         <div className="flex items-center gap-2">
           <KeyRound className="h-4 w-4 text-primary" />
           <h2 className="font-semibold">ความปลอดภัย</h2>
@@ -219,8 +219,8 @@ function ProfilePage() {
       </div>
 
       {/* Sign out */}
-      <div className="mt-6 animate-float-in" style={{ animationDelay: "240ms" }}>
-        <Button variant="destructive" onClick={handleSignOut} className="w-full hover:scale-[1.01] transition-transform">
+      <div className="mt-6 " style={{ animationDelay: "240ms" }}>
+        <Button variant="destructive" onClick={handleSignOut} className="w-full  transition-transform">
           <LogOut className="h-4 w-4 mr-2" />ออกจากระบบ
         </Button>
       </div>
