@@ -149,17 +149,21 @@ function SchedulePage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary">
-          <CalendarDays className="h-4.5 w-4.5 text-primary-foreground" />
+    <div className="container mx-auto px-4 py-8 md:py-12">
+      <header className="mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary">
+            <CalendarDays className="h-5 w-5 text-primary-foreground" aria-hidden="true" />
+          </div>
+          <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
+            ตารางเรียน
+          </h1>
         </div>
-        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">ตารางเรียน</h1>
-      </div>
+        <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+          เลือกสาขาวิชาและชั้นปีเพื่อแสดงตารางเรียน · คลิกที่วิชาเพื่อดู/เพิ่มงาน
+        </p>
+      </header>
 
-      <p className="text-muted-foreground mb-6 text-sm">
-        เลือกสาขาวิชาและชั้นปีเพื่อแสดงตารางเรียน · คลิกที่วิชาเพื่อดู/เพิ่มงาน
-      </p>
 
       <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-6">
         <Select value={majorFilter} onValueChange={setMajorFilter}>
@@ -191,17 +195,17 @@ function SchedulePage() {
       ) : (
         <>
           <p className="md:hidden text-xs text-muted-foreground mb-2">← เลื่อนแนวนอนเพื่อดูตารางทั้งหมด →</p>
-          <div className="rounded-lg bg-card border-2 border-border backdrop-blur p-2 sm:p-4 overflow-x-auto shadow-sm ">
+          <div className="rounded-lg bg-card border border-border p-2 sm:p-4 overflow-x-auto shadow-sm">
             <div className="min-w-[820px] sm:min-w-[1000px] grid grid-cols-[92px_repeat(11,minmax(60px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
               {/* header */}
-              <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-r border-border bg-muted/40 rounded-tl-lg">
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground py-3 px-2 border-b border-r border-border bg-muted/40 rounded-tl-md">
                 วัน / เวลา
               </div>
               {HOURS.map((h, i) => (
                 <div
                   key={h}
-                  className={`text-xs font-semibold text-foreground/80 text-center py-3 border-b-2 border-l border-border bg-muted/40 ${
-                    i === HOURS.length - 1 ? "rounded-tr-lg" : ""
+                  className={`text-[11px] font-semibold tracking-wide text-foreground text-center py-3 border-b border-l border-border bg-muted/40 ${
+                    i === HOURS.length - 1 ? "rounded-tr-md" : ""
                   }`}
                 >
                   {String(h).padStart(2, "0")}:00
@@ -211,12 +215,13 @@ function SchedulePage() {
               {WEEKDAYS.map((d, idx) => (
                 <div key={d.label} className="contents">
                   <div
-                    className={`text-[11px] sm:text-sm font-semibold py-3 sm:py-4 px-1.5 sm:px-3 flex items-center border-b border-r border-border bg-muted/20 ${
-                      idx === WEEKDAYS.length - 1 ? "rounded-bl-lg border-b-0" : ""
+                    className={`text-xs sm:text-sm font-semibold text-foreground py-3 sm:py-4 px-2 sm:px-3 flex items-center border-b border-r border-border bg-muted/20 ${
+                      idx === WEEKDAYS.length - 1 ? "rounded-bl-md border-b-0" : ""
                     }`}
                   >
                     <span className="truncate">{d.label}</span>
                   </div>
+
                   <div
                     className={`col-span-11 relative h-20 border-b border-border ${
                       idx === WEEKDAYS.length - 1 ? "border-b-0" : ""
@@ -243,32 +248,37 @@ function SchedulePage() {
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`group absolute top-1.5 bottom-1.5 rounded-md bg-gradient-to-br border ${colors[i % colors.length]} p-1.5 sm:p-2 overflow-hidden transition-colors cursor-pointer text-left hover:z-10`}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-md bg-gradient-to-br border ${colors[i % colors.length]} px-2 py-1.5 overflow-hidden transition-colors cursor-pointer text-left hover:z-10`}
                             style={{ left: `${left}%`, width: `${width}%` }}
+                            aria-label={`${s.subjects?.code ?? ""} ${s.subjects?.name ?? ""}, ${s.start_time.slice(0,5)} ถึง ${s.end_time.slice(0,5)}, ห้อง ${s.rooms?.name ?? "-"}${hasWork ? `, มีงาน ${counts!.total} รายการ` : ""}`}
                             title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
-
                             {/* assignment indicator */}
                             {hasWork && (
-                              <span className="absolute top-1.5 right-1.5 flex items-center gap-1 z-10">
+                              <span className="absolute top-1 right-1 flex items-center gap-1 z-10">
                                 {hasOverdue && (
-                                  <span className="relative flex h-2 w-2">
+                                  <span className="relative flex h-2 w-2" aria-hidden="true">
                                     <span className="absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75 animate-ping" />
                                     <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive" />
                                   </span>
                                 )}
-                                <span className="rounded-full bg-background/80 backdrop-blur px-1.5 py-0.5 text-[9px] font-bold text-foreground border border-border shadow-sm">
+                                <span className="rounded-full bg-background/90 px-1.5 py-0.5 text-[10px] font-semibold text-foreground border border-border tabular-nums">
                                   {counts!.total}
                                 </span>
                               </span>
                             )}
-                            <div className="relative text-[11px] font-bold truncate text-foreground">{s.subjects?.code}</div>
-                            <div className="relative text-[10px] text-foreground/90 truncate">{s.subjects?.name}</div>
-                            <div className="relative text-[9px] text-foreground/70 truncate">
+                            <div className="text-[11px] font-semibold leading-tight tracking-tight truncate text-foreground">
+                              {s.subjects?.code}
+                            </div>
+                            <div className="text-[11px] leading-tight truncate text-foreground/85 mt-0.5">
+                              {s.subjects?.name}
+                            </div>
+                            <div className="text-[10px] leading-tight truncate text-muted-foreground mt-0.5 tabular-nums">
                               {s.start_time.slice(0, 5)}–{s.end_time.slice(0, 5)} · {s.rooms?.name}
                             </div>
                           </button>
                         );
+
                       })}
                   </div>
                 </div>
