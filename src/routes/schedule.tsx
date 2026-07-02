@@ -242,12 +242,11 @@ function SchedulePage() {
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`group absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-1.5 sm:p-2 overflow-hidden backdrop-blur-md shadow-md hover:shadow-glow transition-all duration-300 cursor-pointer text-left hover:scale-[1.04] hover:z-10 animate-float-in`}
-                            style={{ left: `${left}%`, width: `${width}%`, animationDelay: `${i * 40}ms` }}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-md bg-gradient-to-br border ${colors[i % colors.length]} p-1.5 sm:p-2 overflow-hidden transition-colors cursor-pointer text-left hover:z-10`}
+                            style={{ left: `${left}%`, width: `${width}%` }}
                             title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
-                            {/* shine sweep on hover */}
-                            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:[animation:shine_1.1s_ease-out]" />
+
                             {/* assignment indicator */}
                             {hasWork && (
                               <span className="absolute top-1.5 right-1.5 flex items-center gap-1 z-10">
