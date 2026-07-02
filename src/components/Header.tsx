@@ -63,16 +63,17 @@ export function Header() {
           ) : (
             <>
               <Link to="/auth" search={{ mode: "login" } as never}>
-                <Button variant="ghost" size="sm" className="gap-1.5 transition-all hover:scale-105">
+                <Button variant="ghost" size="sm" className="gap-1.5">
                   <LogIn className="h-4 w-4" /> เข้าสู่ระบบ
                 </Button>
               </Link>
               <Link to="/auth" search={{ mode: "register" } as never}>
-                <Button size="sm" className="gap-1.5 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-all hover:scale-105 shadow-glow">
+                <Button size="sm" className="gap-1.5">
                   <UserPlus className="h-4 w-4" /> สมัครสมาชิก
                 </Button>
               </Link>
             </>
+
           )}
         </nav>
 
