@@ -132,19 +132,19 @@ function ProfilePage() {
   return (
     <div className="container mx-auto px-4 py-10 max-w-2xl animate-float-in">
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-glow">
           <User className="h-5 w-5 text-primary-foreground" />
         </div>
         <h1 className="text-2xl font-bold">โปรไฟล์ของฉัน</h1>
       </div>
 
       {/* Avatar card */}
-      <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl p-6 shadow-card mb-6 animate-float-in" style={{ animationDelay: "60ms" }}>
+      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm mb-6 animate-float-in" style={{ animationDelay: "60ms" }}>
         <div className="flex items-center gap-5">
           <div className="relative group">
             <Avatar className="h-20 w-20 ring-2 ring-primary/40 shadow-glow transition-transform hover:scale-105">
               <AvatarImage src={signedAvatar ?? undefined} alt={fullName} />
-              <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-lg font-bold">
+              <AvatarFallback className="bg-primary text-primary-foreground text-lg font-bold">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -168,7 +168,7 @@ function ProfilePage() {
       </div>
 
       {/* Profile info */}
-      <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl p-6 shadow-card space-y-5 animate-float-in" style={{ animationDelay: "120ms" }}>
+      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm space-y-5 animate-float-in" style={{ animationDelay: "120ms" }}>
         <div className="space-y-2">
           <Label>อีเมล</Label>
           <Input value={email} disabled />
@@ -198,13 +198,13 @@ function ProfilePage() {
             </SelectContent>
           </Select>
         </div>
-        <Button onClick={handleSave} disabled={saving} className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-all hover:scale-[1.01]">
+        <Button onClick={handleSave} disabled={saving} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all hover:scale-[1.01]">
           {saving ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />กำลังบันทึก...</> : "บันทึก"}
         </Button>
       </div>
 
       {/* Security */}
-      <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl p-6 shadow-card mt-6 space-y-4 animate-float-in" style={{ animationDelay: "180ms" }}>
+      <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm mt-6 space-y-4 animate-float-in" style={{ animationDelay: "180ms" }}>
         <div className="flex items-center gap-2">
           <KeyRound className="h-4 w-4 text-primary" />
           <h2 className="font-semibold">ความปลอดภัย</h2>

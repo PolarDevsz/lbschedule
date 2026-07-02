@@ -36,7 +36,7 @@ function AdminPage() {
   return (
     <div className="container mx-auto px-4 py-10 max-w-6xl">
       <div className="flex items-center gap-3 mb-6">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-glow">
           <Shield className="h-5 w-5 text-primary-foreground" />
         </div>
         <div>
@@ -66,7 +66,7 @@ function AdminPage() {
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl p-6 shadow-card">
+    <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm">
       {children}
     </div>
   );
@@ -304,7 +304,7 @@ function SchedulesAdmin() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={save} className="bg-gradient-to-r from-primary to-accent text-primary-foreground">บันทึก</Button>
+            <Button onClick={save} className="bg-primary text-primary-foreground">บันทึก</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -95,7 +95,7 @@ export function Header() {
 
       {/* Mobile menu panel */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl">
+        <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur">
           <nav className="container mx-auto px-4 py-3 flex flex-col gap-1.5">
             <Link to="/schedule" onClick={closeMobile}>
               <Button variant="ghost" className="w-full justify-start">ตารางเรียน</Button>
@@ -130,7 +130,7 @@ export function Header() {
                   </Button>
                 </Link>
                 <Link to="/auth" search={{ mode: "register" } as never} onClick={closeMobile}>
-                  <Button className="w-full justify-start gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+                  <Button className="w-full justify-start gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
                     <UserPlus className="h-4 w-4" /> สมัครสมาชิก
                   </Button>
                 </Link>

@@ -150,7 +150,7 @@ function SchedulePage() {
   return (
     <div className="container mx-auto px-4 py-10">
       <div className="flex items-center gap-3 mb-2 animate-slide-down">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow animate-glow-pulse">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-glow animate-glow-pulse">
           <CalendarDays className="h-5 w-5 text-primary-foreground" />
         </div>
         <h1 className="text-2xl md:text-3xl font-bold text-gradient-teal">ตารางเรียน</h1>
@@ -183,13 +183,13 @@ function SchedulePage() {
       {isLoading ? (
         <div className="text-center py-20 text-muted-foreground">กำลังโหลด...</div>
       ) : schedules.length === 0 ? (
-        <div className="text-center py-20 text-muted-foreground rounded-2xl bg-card/40 border border-border">
+        <div className="text-center py-20 text-muted-foreground rounded-lg bg-card/40 border border-border">
           ไม่พบตารางเรียน
         </div>
       ) : (
         <>
           <p className="md:hidden text-xs text-muted-foreground mb-2">← เลื่อนแนวนอนเพื่อดูตารางทั้งหมด →</p>
-          <div className="rounded-2xl bg-card/60 border-2 border-border backdrop-blur-xl p-2 sm:p-4 overflow-x-auto shadow-card animate-float-in">
+          <div className="rounded-lg bg-card border-2 border-border backdrop-blur p-2 sm:p-4 overflow-x-auto shadow-sm animate-float-in">
             <div className="min-w-[820px] sm:min-w-[1000px] grid grid-cols-[92px_repeat(11,minmax(60px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
               {/* header */}
               <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-r border-border bg-muted/40 rounded-tl-lg">
@@ -281,7 +281,7 @@ function SchedulePage() {
       {schedules.length > 0 && (
         <div className="mt-8">
           <h2 className="font-semibold mb-3">รายการวิชา</h2>
-          <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl overflow-x-auto">
+          <div className="rounded-lg bg-card border border-border backdrop-blur overflow-x-auto">
             <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
                 <tr>

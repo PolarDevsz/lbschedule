@@ -83,14 +83,14 @@ function AuthPage() {
     <div className="container mx-auto px-4 py-16 flex justify-center">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-accent shadow-glow mb-4">
+          <div className="inline-flex h-14 w-14 items-center justify-center rounded-lg bg-primary shadow-glow mb-4">
             <CalendarDays className="h-7 w-7 text-primary-foreground" />
           </div>
           <h1 className="text-2xl font-bold">ยินดีต้อนรับสู่ LBSchedule</h1>
           <p className="text-sm text-muted-foreground mt-1">เข้าสู่ระบบเพื่อจัดการตารางเรียนของคุณ</p>
         </div>
 
-        <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl p-6 shadow-card">
+        <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm">
           <Tabs defaultValue={mode}>
             <TabsList className="grid grid-cols-2 w-full mb-6">
               <TabsTrigger value="login">เข้าสู่ระบบ</TabsTrigger>
@@ -107,7 +107,7 @@ function AuthPage() {
                   <Label htmlFor="lp">รหัสผ่าน</Label>
                   <Input id="lp" type="password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} required />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+                <Button type="submit" disabled={loading} className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                   {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
                 </Button>
               </form>
@@ -127,7 +127,7 @@ function AuthPage() {
                   <Label htmlFor="rp">รหัสผ่าน</Label>
                   <Input id="rp" type="password" value={regPassword} onChange={(e) => setRegPassword(e.target.value)} required />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+                <Button type="submit" disabled={loading} className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                   {loading ? "กำลังสมัคร..." : "สมัครสมาชิก"}
                 </Button>
               </form>
