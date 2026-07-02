@@ -135,10 +135,9 @@
   }
 
   body {
-    background-image: var(--gradient-hero);
-    background-attachment: fixed;
     min-height: 100vh;
   }
+
 }
 
 @keyframes fade-in {
