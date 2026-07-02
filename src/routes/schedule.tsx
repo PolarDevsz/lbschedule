@@ -248,32 +248,37 @@ function SchedulePage() {
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`group absolute top-1.5 bottom-1.5 rounded-md bg-gradient-to-br border ${colors[i % colors.length]} p-1.5 sm:p-2 overflow-hidden transition-colors cursor-pointer text-left hover:z-10`}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-md bg-gradient-to-br border ${colors[i % colors.length]} px-2 py-1.5 overflow-hidden transition-colors cursor-pointer text-left hover:z-10`}
                             style={{ left: `${left}%`, width: `${width}%` }}
+                            aria-label={`${s.subjects?.code ?? ""} ${s.subjects?.name ?? ""}, ${s.start_time.slice(0,5)} ถึง ${s.end_time.slice(0,5)}, ห้อง ${s.rooms?.name ?? "-"}${hasWork ? `, มีงาน ${counts!.total} รายการ` : ""}`}
                             title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
-
                             {/* assignment indicator */}
                             {hasWork && (
-                              <span className="absolute top-1.5 right-1.5 flex items-center gap-1 z-10">
+                              <span className="absolute top-1 right-1 flex items-center gap-1 z-10">
                                 {hasOverdue && (
-                                  <span className="relative flex h-2 w-2">
+                                  <span className="relative flex h-2 w-2" aria-hidden="true">
                                     <span className="absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75 animate-ping" />
                                     <span className="relative inline-flex h-2 w-2 rounded-full bg-destructive" />
                                   </span>
                                 )}
-                                <span className="rounded-full bg-background/80 backdrop-blur px-1.5 py-0.5 text-[9px] font-bold text-foreground border border-border shadow-sm">
+                                <span className="rounded-full bg-background/90 px-1.5 py-0.5 text-[10px] font-semibold text-foreground border border-border tabular-nums">
                                   {counts!.total}
                                 </span>
                               </span>
                             )}
-                            <div className="relative text-[11px] font-bold truncate text-foreground">{s.subjects?.code}</div>
-                            <div className="relative text-[10px] text-foreground/90 truncate">{s.subjects?.name}</div>
-                            <div className="relative text-[9px] text-foreground/70 truncate">
+                            <div className="text-[11px] font-semibold leading-tight tracking-tight truncate text-foreground">
+                              {s.subjects?.code}
+                            </div>
+                            <div className="text-[11px] leading-tight truncate text-foreground/85 mt-0.5">
+                              {s.subjects?.name}
+                            </div>
+                            <div className="text-[10px] leading-tight truncate text-muted-foreground mt-0.5 tabular-nums">
                               {s.start_time.slice(0, 5)}–{s.end_time.slice(0, 5)} · {s.rooms?.name}
                             </div>
                           </button>
                         );
+
                       })}
                   </div>
                 </div>
