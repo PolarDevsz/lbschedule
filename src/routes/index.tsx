@@ -34,28 +34,25 @@ function HomePage() {
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 max-w-6xl">
       {/* Hero */}
-      <section className="flex flex-col items-center justify-center text-center pt-20 pb-16 md:pt-32 md:pb-24">
-        <div className="relative mb-8">
-          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-primary/40 to-accent/40 rounded-full" />
-          <div className="relative flex h-28 w-28 items-center justify-center rounded-3xl bg-gradient-to-br from-primary via-accent to-primary shadow-glow">
-            <CalendarDays className="h-14 w-14 text-primary-foreground" strokeWidth={1.5} />
-          </div>
+      <section className="flex flex-col items-center text-center pt-16 pb-14 md:pt-24 md:pb-20">
+        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl border border-border bg-card">
+          <CalendarDays className="h-8 w-8 text-primary" strokeWidth={1.75} />
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-balance max-w-3xl">
-          ระบบจัดการ<span className="text-gradient-teal">ตารางเรียน</span>
+        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-balance max-w-3xl text-foreground">
+          ระบบจัดการตารางเรียน
         </h1>
-        <p className="mt-6 max-w-xl text-base md:text-lg text-muted-foreground leading-relaxed">
+        <p className="mt-4 max-w-2xl text-sm md:text-base text-muted-foreground leading-relaxed">
           ยินดีต้อนรับสู่ระบบจัดตารางเรียน จากแผนกวิชาช่างเทคนิคคอมพิวเตอร์ สำหรับนักศึกษาและบุคคลทั่วไป ค้นหาและดูตารางเรียนได้ทันทีโดยไม่ต้องเข้าสู่ระบบ
         </p>
 
         {/* Search */}
-        <div className="mt-12 w-full max-w-2xl">
-          <div className="flex flex-col sm:flex-row gap-2 p-2 rounded-2xl bg-card/60 border border-border backdrop-blur-xl shadow-card">
+        <div className="mt-10 w-full max-w-xl">
+          <div className="flex flex-col sm:flex-row gap-2 p-1.5 rounded-lg bg-card border border-border shadow-sm">
             <Select value={majorId} onValueChange={setMajorId}>
-              <SelectTrigger className="flex-1 h-12 border-0 bg-transparent text-base focus:ring-0">
+              <SelectTrigger className="flex-1 h-11 border-0 bg-transparent text-sm focus:ring-0 shadow-none">
                 <SelectValue placeholder="-- แสดงตารางเรียนทุกสาขาวิชา --" />
               </SelectTrigger>
               <SelectContent>
@@ -65,11 +62,7 @@ function HomePage() {
                 ))}
               </SelectContent>
             </Select>
-            <Button
-              onClick={handleSearch}
-              size="lg"
-              className="h-12 px-8 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 gap-2"
-            >
+            <Button onClick={handleSearch} size="default" className="h-11 px-6 gap-2">
               <Search className="h-4 w-4" /> ค้นหา
             </Button>
           </div>
@@ -77,7 +70,7 @@ function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="grid md:grid-cols-3 gap-4 pb-24 max-w-5xl mx-auto">
+      <section className="grid md:grid-cols-3 gap-4 pb-20 border-t border-border pt-12">
         {[
           { icon: CalendarDays, title: "ดูตารางทั้งสัปดาห์", desc: "แสดงตารางเรียนแบบ timetable เข้าใจง่าย" },
           { icon: Clock, title: "ค้นหาตามสาขา", desc: "เลือกสาขาวิชาเพื่อดูตารางของชั้นปีนั้นๆ" },
@@ -85,12 +78,12 @@ function HomePage() {
         ].map((f) => (
           <div
             key={f.title}
-            className="group p-6 rounded-2xl bg-card/40 border border-border/60 backdrop-blur-md hover:bg-card/70 hover:border-primary/40 transition-all"
+            className="p-5 rounded-lg bg-card border border-border hover:border-primary/40 transition-colors"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30 mb-4">
-              <f.icon className="h-5 w-5 text-primary" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted mb-3">
+              <f.icon className="h-4.5 w-4.5 text-primary" strokeWidth={1.75} />
             </div>
-            <h3 className="font-semibold text-base mb-1.5">{f.title}</h3>
+            <h3 className="font-medium text-sm mb-1 text-foreground">{f.title}</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
           </div>
         ))}
@@ -98,3 +91,4 @@ function HomePage() {
     </div>
   );
 }
+

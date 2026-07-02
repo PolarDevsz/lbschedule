@@ -135,193 +135,40 @@
   }
 
   body {
-    background-image: var(--gradient-hero);
-    background-attachment: fixed;
     min-height: 100vh;
   }
+
 }
 
-@keyframes theme-icon-in {
-  0% { opacity: 0; transform: rotate(-90deg) scale(0.5); }
-  100% { opacity: 1; transform: rotate(0deg) scale(1); }
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 currentColor; opacity: 0.7; }
-  70% { box-shadow: 0 0 0 6px transparent; opacity: 0; }
+  0% { box-shadow: 0 0 0 0 currentColor; opacity: 0.6; }
+  70% { box-shadow: 0 0 0 5px transparent; opacity: 0; }
   100% { box-shadow: 0 0 0 0 transparent; opacity: 0; }
 }
 
-@keyframes shine {
-  0% { transform: translateX(-120%) skewX(-12deg); }
-  100% { transform: translateX(220%) skewX(-12deg); }
-}
+.animate-float-in,
+.animate-fade-up,
+.animate-stagger-in,
+.animate-slide-down,
+.animate-blur-in { animation: fade-in 0.25s ease-out both; }
 
-@keyframes float-in {
-  0% { opacity: 0; transform: translateY(8px) scale(0.96); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
+.animate-pop { animation: fade-in 0.2s ease-out both; }
 
-@keyframes slide-down {
-  0% { opacity: 0; transform: translateY(-12px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+/* Subtle table row hover */
+tbody tr { transition: background-color 150ms ease; }
 
-@keyframes pop {
-  0% { transform: scale(0.6); opacity: 0; }
-  60% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.animate-float-in { animation: float-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-slide-down { animation: slide-down 0.3s ease-out both; }
-.animate-pop { animation: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-.animate-fade-up { animation: float-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
-
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
-}
-
-.hover-lift {
-  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease;
-}
-.hover-lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
-
-button, a { transition: color 220ms ease, background-color 220ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 260ms ease, opacity 200ms ease, border-color 220ms ease; }
-button:active { transform: scale(0.97); }
-
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 oklch(from var(--primary) l c h / 0.0); }
-  50% { box-shadow: 0 0 24px 4px oklch(from var(--primary) l c h / 0.35); }
-}
-.animate-glow-pulse { animation: glow-pulse 2.4s ease-in-out infinite; }
-
-@keyframes subtle-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-.animate-bob { animation: subtle-bob 3s ease-in-out infinite; }
-
-@keyframes stagger-in {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.animate-stagger-in { animation: stagger-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
-
-/* smoother dialog/select content */
-[data-radix-popper-content-wrapper] > * { animation: float-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both; }
-
-/* table row hover lift */
-tbody tr { transition: background-color 200ms ease, transform 200ms ease, box-shadow 200ms ease; }
-tbody tr:hover { transform: translateX(2px); box-shadow: inset 3px 0 0 0 var(--primary); }
-
-/* === MEGA ANIMATIONS PACK === */
-@keyframes shimmer-bg {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-@keyframes float-y {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-@keyframes spin-slow { to { transform: rotate(360deg); } }
-@keyframes wiggle {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-3deg); }
-  75% { transform: rotate(3deg); }
-}
-@keyframes blur-in {
-  0% { opacity: 0; filter: blur(8px); transform: translateY(6px); }
-  100% { opacity: 1; filter: blur(0); transform: translateY(0); }
-}
-@keyframes slide-in-left {
-  0% { opacity: 0; transform: translateX(-16px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-@keyframes slide-in-right {
-  0% { opacity: 0; transform: translateX(16px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-@keyframes bounce-in {
-  0% { opacity: 0; transform: scale(0.3); }
-  50% { opacity: 1; transform: scale(1.05); }
-  70% { transform: scale(0.95); }
-  100% { transform: scale(1); }
-}
-@keyframes ripple {
-  0% { transform: scale(0); opacity: 0.6; }
-  100% { transform: scale(2.5); opacity: 0; }
-}
-@keyframes border-flow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.animate-blur-in { animation: blur-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-slide-in-left { animation: slide-in-left 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-slide-in-right { animation: slide-in-right 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-bounce-in { animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-.animate-float-y { animation: float-y 3.5s ease-in-out infinite; }
-.animate-spin-slow { animation: spin-slow 8s linear infinite; }
-.animate-wiggle:hover { animation: wiggle 0.5s ease-in-out; }
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, oklch(from var(--primary) l c h / 0.15), transparent);
-  background-size: 200% 100%;
-  animation: shimmer-bg 2.2s linear infinite;
-}
-
-/* Global polish */
-* { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
-html { scroll-behavior: smooth; }
-
-/* Inputs glow on focus */
-input, textarea, select, [role="combobox"] {
-  transition: border-color 220ms ease, box-shadow 260ms ease, transform 200ms ease, background-color 220ms ease;
+/* Focus ring for form controls (accessibility) */
+input, textarea, select {
+  transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 input:focus-visible, textarea:focus-visible, select:focus-visible {
-  box-shadow: 0 0 0 3px oklch(from var(--ring) l c h / 0.25), 0 0 18px -4px oklch(from var(--primary) l c h / 0.4);
+  box-shadow: 0 0 0 2px oklch(from var(--ring) l c h / 0.35);
 }
-
-/* Cards lift + glow */
-[class*="rounded"][class*="border"], .card, [data-slot="card"] {
-  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 320ms ease, border-color 320ms ease;
-}
-
-/* Buttons get a sheen on hover */
-button {
-  position: relative;
-  overflow: hidden;
-}
-button:hover { box-shadow: 0 4px 18px -6px oklch(from var(--primary) l c h / 0.45); }
-
-/* Links underline grow */
-a:not([class*="button"]):not([data-slot]) {
-  background-image: linear-gradient(var(--primary), var(--primary));
-  background-size: 0% 1.5px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 300ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-a:not([class*="button"]):not([data-slot]):hover { background-size: 100% 1.5px; }
-
-/* Dialog/sheet smoother */
-[data-state="open"][data-slot="dialog-content"],
-[data-state="open"][role="dialog"] {
-  animation: bounce-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-/* SVG icons subtle scale on parent hover */
-button:hover > svg, a:hover > svg { transform: scale(1.1) rotate(-2deg); }
-svg { transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1); }
-
-/* Page-level entrance */
-main, [role="main"] { animation: blur-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
@@ -334,13 +181,11 @@ main, [role="main"] { animation: blur-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both
 }
 
 @utility text-gradient-teal {
-  background: var(--gradient-teal);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary);
 }
 
 @utility shadow-glow {
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 1px 2px 0 oklch(0 0 0 / 0.05);
 }
+
 

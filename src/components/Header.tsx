@@ -42,36 +42,38 @@ export function Header() {
   const closeMobile = () => setMobileOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-xl">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2.5 group min-w-0" onClick={closeMobile}>
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow transition-transform group-hover:scale-105">
-            <Calendar className="h-5 w-5 text-primary-foreground" />
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+      <div className="container mx-auto flex h-14 items-center justify-between px-4">
+        <Link to="/" className="flex items-center gap-2 min-w-0" onClick={closeMobile}>
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary">
+            <Calendar className="h-4 w-4 text-primary-foreground" />
           </div>
-          <span className="text-lg font-semibold tracking-tight truncate">LBSchedule</span>
+          <span className="text-base font-semibold tracking-tight truncate">LBSchedule</span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden md:flex items-center gap-1">
           <Link to="/schedule">
-            <Button variant="ghost" size="sm" className="transition-all hover:scale-105">ตารางเรียน</Button>
+            <Button variant="ghost" size="sm">ตารางเรียน</Button>
           </Link>
+
           <ThemeToggle />
           {user ? (
             <UserMenu user={user} isAdmin={isAdmin} onSignOut={handleSignOut} />
           ) : (
             <>
               <Link to="/auth" search={{ mode: "login" } as never}>
-                <Button variant="ghost" size="sm" className="gap-1.5 transition-all hover:scale-105">
+                <Button variant="ghost" size="sm" className="gap-1.5">
                   <LogIn className="h-4 w-4" /> เข้าสู่ระบบ
                 </Button>
               </Link>
               <Link to="/auth" search={{ mode: "register" } as never}>
-                <Button size="sm" className="gap-1.5 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-all hover:scale-105 shadow-glow">
+                <Button size="sm" className="gap-1.5">
                   <UserPlus className="h-4 w-4" /> สมัครสมาชิก
                 </Button>
               </Link>
             </>
+
           )}
         </nav>
 
@@ -93,7 +95,7 @@ export function Header() {
 
       {/* Mobile menu panel */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl">
+        <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur">
           <nav className="container mx-auto px-4 py-3 flex flex-col gap-1.5">
             <Link to="/schedule" onClick={closeMobile}>
               <Button variant="ghost" className="w-full justify-start">ตารางเรียน</Button>
@@ -128,7 +130,7 @@ export function Header() {
                   </Button>
                 </Link>
                 <Link to="/auth" search={{ mode: "register" } as never} onClick={closeMobile}>
-                  <Button className="w-full justify-start gap-2 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90">
+                  <Button className="w-full justify-start gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
                     <UserPlus className="h-4 w-4" /> สมัครสมาชิก
                   </Button>
                 </Link>

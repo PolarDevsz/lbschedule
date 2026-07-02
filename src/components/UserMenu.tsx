@@ -51,10 +51,10 @@ export function UserMenu({ user, isAdmin, onSignOut }: Props) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="group flex items-center gap-2 rounded-full border border-border/60 bg-card/50 pl-1 pr-3 py-1 transition-all duration-300 hover:bg-card hover:shadow-glow hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-ring">
+      <DropdownMenuTrigger className="group flex items-center gap-2 rounded-full border border-border/60 bg-card/50 pl-1 pr-3 py-1 transition-colors hover:bg-card  focus:outline-none focus:ring-2 focus:ring-ring">
         <Avatar className="h-8 w-8 ring-2 ring-primary/30 transition-all group-hover:ring-primary">
           <AvatarImage src={avatarSigned ?? undefined} alt={display} />
-          <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-xs font-bold">
+          <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
             {initial}
           </AvatarFallback>
         </Avatar>
@@ -62,7 +62,7 @@ export function UserMenu({ user, isAdmin, onSignOut }: Props) {
           {display}
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 animate-slide-down">
+      <DropdownMenuContent align="end" className="w-56 ">
         <DropdownMenuLabel className="flex flex-col gap-0.5">
           <span className="truncate font-semibold">{display}</span>
           <span className="truncate text-xs font-normal text-muted-foreground">

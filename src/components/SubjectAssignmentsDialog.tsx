@@ -91,7 +91,7 @@ export function SubjectAssignmentsDialog({ open, onOpenChange, subject }: Props)
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="max-w-2xl max-h-[90vh] overflow-y-auto animate-float-in"
+        className="max-w-2xl max-h-[90vh] overflow-y-auto "
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <DialogHeader>
@@ -124,7 +124,7 @@ export function SubjectAssignmentsDialog({ open, onOpenChange, subject }: Props)
             <Button
               onClick={() => addMut.mutate()}
               disabled={!title.trim() || addMut.isPending}
-              className="bg-gradient-to-r from-primary to-accent"
+              className="bg-primary"
             >
               {addMut.isPending ? "กำลังเพิ่ม..." : "เพิ่มงาน"}
             </Button>
@@ -145,7 +145,7 @@ export function SubjectAssignmentsDialog({ open, onOpenChange, subject }: Props)
             </div>
           ) : (
             assignments.map((a) => (
-              <div key={a.id} className="rounded-lg border border-border bg-card/60 p-3 flex gap-3">
+              <div key={a.id} className="rounded-lg border border-border bg-card p-3 flex gap-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-medium">{a.title}</span>

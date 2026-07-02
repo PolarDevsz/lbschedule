@@ -133,13 +133,14 @@ function SchedulePage() {
   };
 
   const colors = [
-    "from-cyan-500/25 to-teal-500/25 border-cyan-400/50 hover:from-cyan-500/55 hover:to-teal-500/55",
-    "from-violet-500/25 to-purple-500/25 border-violet-400/50 hover:from-violet-500/55 hover:to-purple-500/55",
-    "from-amber-500/25 to-orange-500/25 border-amber-400/50 hover:from-amber-500/55 hover:to-orange-500/55",
-    "from-rose-500/25 to-pink-500/25 border-rose-400/50 hover:from-rose-500/55 hover:to-pink-500/55",
-    "from-emerald-500/25 to-green-500/25 border-emerald-400/50 hover:from-emerald-500/55 hover:to-green-500/55",
-    "from-blue-500/25 to-indigo-500/25 border-blue-400/50 hover:from-blue-500/55 hover:to-indigo-500/55",
+    "from-cyan-500/10 to-cyan-500/5 border-cyan-500/30 hover:bg-cyan-500/15",
+    "from-violet-500/10 to-violet-500/5 border-violet-500/30 hover:bg-violet-500/15",
+    "from-amber-500/10 to-amber-500/5 border-amber-500/30 hover:bg-amber-500/15",
+    "from-rose-500/10 to-rose-500/5 border-rose-500/30 hover:bg-rose-500/15",
+    "from-emerald-500/10 to-emerald-500/5 border-emerald-500/30 hover:bg-emerald-500/15",
+    "from-blue-500/10 to-blue-500/5 border-blue-500/30 hover:bg-blue-500/15",
   ];
+
 
   const openSubject = (s: ScheduleRow) => {
     if (!s.subjects) return;
@@ -149,12 +150,13 @@ function SchedulePage() {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <div className="flex items-center gap-3 mb-2 animate-slide-down">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow animate-glow-pulse">
-          <CalendarDays className="h-5 w-5 text-primary-foreground" />
+      <div className="flex items-center gap-3 mb-2">
+        <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary">
+          <CalendarDays className="h-4.5 w-4.5 text-primary-foreground" />
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-gradient-teal">ตารางเรียน</h1>
+        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">ตารางเรียน</h1>
       </div>
+
       <p className="text-muted-foreground mb-6 text-sm">
         เลือกสาขาวิชาและชั้นปีเพื่อแสดงตารางเรียน · คลิกที่วิชาเพื่อดู/เพิ่มงาน
       </p>
@@ -183,13 +185,13 @@ function SchedulePage() {
       {isLoading ? (
         <div className="text-center py-20 text-muted-foreground">กำลังโหลด...</div>
       ) : schedules.length === 0 ? (
-        <div className="text-center py-20 text-muted-foreground rounded-2xl bg-card/40 border border-border">
+        <div className="text-center py-20 text-muted-foreground rounded-lg bg-card/40 border border-border">
           ไม่พบตารางเรียน
         </div>
       ) : (
         <>
           <p className="md:hidden text-xs text-muted-foreground mb-2">← เลื่อนแนวนอนเพื่อดูตารางทั้งหมด →</p>
-          <div className="rounded-2xl bg-card/60 border-2 border-border backdrop-blur-xl p-2 sm:p-4 overflow-x-auto shadow-card animate-float-in">
+          <div className="rounded-lg bg-card border-2 border-border backdrop-blur p-2 sm:p-4 overflow-x-auto shadow-sm ">
             <div className="min-w-[820px] sm:min-w-[1000px] grid grid-cols-[92px_repeat(11,minmax(60px,1fr))] sm:grid-cols-[110px_repeat(11,minmax(80px,1fr))] gap-0">
               {/* header */}
               <div className="text-xs font-semibold text-muted-foreground py-3 px-2 border-b-2 border-r border-border bg-muted/40 rounded-tl-lg">
@@ -241,12 +243,11 @@ function SchedulePage() {
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`group absolute top-1.5 bottom-1.5 rounded-lg bg-gradient-to-br border-2 ${colors[i % colors.length]} p-1.5 sm:p-2 overflow-hidden backdrop-blur-md shadow-md hover:shadow-glow transition-all duration-300 cursor-pointer text-left hover:scale-[1.04] hover:z-10 animate-float-in`}
-                            style={{ left: `${left}%`, width: `${width}%`, animationDelay: `${i * 40}ms` }}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-md bg-gradient-to-br border ${colors[i % colors.length]} p-1.5 sm:p-2 overflow-hidden transition-colors cursor-pointer text-left hover:z-10`}
+                            style={{ left: `${left}%`, width: `${width}%` }}
                             title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
-                            {/* shine sweep on hover */}
-                            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:[animation:shine_1.1s_ease-out]" />
+
                             {/* assignment indicator */}
                             {hasWork && (
                               <span className="absolute top-1.5 right-1.5 flex items-center gap-1 z-10">
@@ -281,7 +282,7 @@ function SchedulePage() {
       {schedules.length > 0 && (
         <div className="mt-8">
           <h2 className="font-semibold mb-3">รายการวิชา</h2>
-          <div className="rounded-2xl bg-card/60 border border-border backdrop-blur-xl overflow-x-auto">
+          <div className="rounded-lg bg-card border border-border backdrop-blur overflow-x-auto">
             <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-muted/30 text-xs uppercase text-muted-foreground">
                 <tr>
