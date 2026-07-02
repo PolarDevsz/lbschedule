@@ -42,20 +42,21 @@ export function Header() {
   const closeMobile = () => setMobileOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/50 bg-background/80 backdrop-blur-xl">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2.5 group min-w-0" onClick={closeMobile}>
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow transition-transform group-hover:scale-105">
-            <Calendar className="h-5 w-5 text-primary-foreground" />
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+      <div className="container mx-auto flex h-14 items-center justify-between px-4">
+        <Link to="/" className="flex items-center gap-2 min-w-0" onClick={closeMobile}>
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary">
+            <Calendar className="h-4 w-4 text-primary-foreground" />
           </div>
-          <span className="text-lg font-semibold tracking-tight truncate">LBSchedule</span>
+          <span className="text-base font-semibold tracking-tight truncate">LBSchedule</span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden md:flex items-center gap-1">
           <Link to="/schedule">
-            <Button variant="ghost" size="sm" className="transition-all hover:scale-105">ตารางเรียน</Button>
+            <Button variant="ghost" size="sm">ตารางเรียน</Button>
           </Link>
+
           <ThemeToggle />
           {user ? (
             <UserMenu user={user} isAdmin={isAdmin} onSignOut={handleSignOut} />
