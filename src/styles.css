@@ -144,23 +144,6 @@
   --sidebar-ring: oklch(0.75 0.14 250);
 }
 
-@layer base {
-  * {
-    border-color: var(--color-border);
-  }
-
-  html, body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-sans);
-    transition: background-color 400ms ease, color 250ms ease;
-  }
-
-  body {
-    min-height: 100vh;
-  }
-
-}
 
 @layer base {
   * {
