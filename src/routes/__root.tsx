@@ -139,7 +139,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <footer className="border-t border-border/40 py-6 text-center text-xs text-muted-foreground">
-          พัฒนาระบบโดย บุคคลนิรนามจาก [ 1 ชทค.1 ] · ระบบจัดการตารางเรียนสมัยใหม่
+          © {new Date().getFullYear()} LBSchedule
         </footer>
       </div>
       <Toaster />
