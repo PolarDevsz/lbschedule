@@ -19,25 +19,39 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
+// Map an 11-digit student ID to a stable synthetic email so we can keep using
+// Supabase's email/password auth without exposing that detail to students.
+const STUDENT_EMAIL_DOMAIN = "student.lbschedule.local";
+const studentIdToEmail = (id: string) => `${id.trim()}@${STUDENT_EMAIL_DOMAIN}`;
+const studentIdSchema = z
+  .string()
+  .trim()
+  .regex(/^\d{11}$/u, "รหัสนักศึกษาต้องเป็นตัวเลข 11 หลัก");
+
 function AuthPage() {
   const { mode } = Route.useSearch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   // login
-  const [loginEmail, setLoginEmail] = useState("");
+  const [loginId, setLoginId] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
   // register
   const [regName, setRegName] = useState("");
-  const [regEmail, setRegEmail] = useState("");
+  const [regId, setRegId] = useState("");
   const [regPassword, setRegPassword] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    const parsed = studentIdSchema.safeParse(loginId);
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0].message);
+      return;
+    }
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
-      email: loginEmail,
+      email: studentIdToEmail(parsed.data),
       password: loginPassword,
     });
     setLoading(false);
@@ -52,22 +66,29 @@ function AuthPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     const schema = z.object({
-      name: z.string().min(2, "กรุณากรอกชื่อ"),
-      email: z.string().email("อีเมลไม่ถูกต้อง"),
-      password: z.string().min(6, "รหัสผ่านอย่างน้อย 6 ตัวอักษร"),
+      name: z.string().trim().min(2, "กรุณากรอกชื่อ").max(100),
+      studentId: studentIdSchema,
+      password: z.string().min(6, "รหัสผ่านอย่างน้อย 6 ตัวอักษร").max(72),
     });
-    const parsed = schema.safeParse({ name: regName, email: regEmail, password: regPassword });
+    const parsed = schema.safeParse({
+      name: regName,
+      studentId: regId,
+      password: regPassword,
+    });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
       return;
     }
     setLoading(true);
     const { error } = await supabase.auth.signUp({
-      email: regEmail,
-      password: regPassword,
+      email: studentIdToEmail(parsed.data.studentId),
+      password: parsed.data.password,
       options: {
         emailRedirectTo: window.location.origin,
-        data: { full_name: regName },
+        data: {
+          full_name: parsed.data.name,
+          student_id: parsed.data.studentId,
+        },
       },
     });
     setLoading(false);
@@ -83,14 +104,16 @@ function AuthPage() {
     <div className="container mx-auto px-4 py-16 flex justify-center">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex h-14 w-14 items-center justify-center rounded-lg bg-primary mb-4">
+          <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-primary mb-4 shadow-sm">
             <CalendarDays className="h-7 w-7 text-primary-foreground" />
           </div>
-          <h1 className="text-2xl font-bold">ยินดีต้อนรับสู่ LBSchedule</h1>
-          <p className="text-sm text-muted-foreground mt-1">เข้าสู่ระบบเพื่อจัดการตารางเรียนของคุณ</p>
+          <h1 className="text-2xl font-semibold tracking-tight">ยินดีต้อนรับสู่ LBSchedule</h1>
+          <p className="text-sm text-muted-foreground mt-1.5">
+            เข้าสู่ระบบด้วยรหัสนักศึกษาเพื่อจัดการตารางเรียนของคุณ
+          </p>
         </div>
 
-        <div className="rounded-lg bg-card border border-border backdrop-blur p-6 shadow-sm">
+        <div className="rounded-xl bg-card border border-border p-6 shadow-sm">
           <Tabs defaultValue={mode}>
             <TabsList className="grid grid-cols-2 w-full mb-6">
               <TabsTrigger value="login">เข้าสู่ระบบ</TabsTrigger>
@@ -100,14 +123,33 @@ function AuthPage() {
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="le">อีเมล</Label>
-                  <Input id="le" type="email" value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} required />
+                  <Label htmlFor="li">รหัสนักศึกษา</Label>
+                  <Input
+                    id="li"
+                    inputMode="numeric"
+                    pattern="\d{11}"
+                    maxLength={11}
+                    placeholder="เช่น 66301010001"
+                    value={loginId}
+                    onChange={(e) => setLoginId(e.target.value.replace(/\D/g, ""))}
+                    required
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lp">รหัสผ่าน</Label>
-                  <Input id="lp" type="password" value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} required />
+                  <Input
+                    id="lp"
+                    type="password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    required
+                  />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                >
                   {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
                 </Button>
               </form>
@@ -120,14 +162,33 @@ function AuthPage() {
                   <Input id="rn" value={regName} onChange={(e) => setRegName(e.target.value)} required />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="re">อีเมล</Label>
-                  <Input id="re" type="email" value={regEmail} onChange={(e) => setRegEmail(e.target.value)} required />
+                  <Label htmlFor="ri">รหัสนักศึกษา (11 หลัก)</Label>
+                  <Input
+                    id="ri"
+                    inputMode="numeric"
+                    pattern="\d{11}"
+                    maxLength={11}
+                    placeholder="เช่น 66301010001"
+                    value={regId}
+                    onChange={(e) => setRegId(e.target.value.replace(/\D/g, ""))}
+                    required
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="rp">รหัสผ่าน</Label>
-                  <Input id="rp" type="password" value={regPassword} onChange={(e) => setRegPassword(e.target.value)} required />
+                  <Input
+                    id="rp"
+                    type="password"
+                    value={regPassword}
+                    onChange={(e) => setRegPassword(e.target.value)}
+                    required
+                  />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                >
                   {loading ? "กำลังสมัคร..." : "สมัครสมาชิก"}
                 </Button>
               </form>
