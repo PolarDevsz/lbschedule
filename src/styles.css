@@ -39,6 +39,8 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: "IBM Plex Sans Thai", "Inter", system-ui, sans-serif;
+  --font-display: "Space Grotesk", "IBM Plex Sans Thai", "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, monospace;
 
   /* Typography scale */
   --text-xs: 0.75rem;
