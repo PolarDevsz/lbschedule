@@ -44,7 +44,7 @@ function HomePage() {
         <section className="flex flex-col items-start pt-16 pb-14 md:pt-28 md:pb-20">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            วิทยาลัยเทคนิคลพบุรี · ช่างเทคนิคคอมพิวเตอร์
+            วิทยาลัยเทคนิคลพบุรี - ช่างเทคนิคคอมพิวเตอร์
           </div>
 
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground text-balance">
@@ -77,7 +77,7 @@ function HomePage() {
               <Link to="/schedule" className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
                 ดูตารางทั้งหมด <ArrowRight className="h-3 w-3" />
               </Link>
-              <span className="opacity-40">·</span>
+              <span className="opacity-40">-</span>
               <Link to="/auth" search={{ mode: "login" } as never} className="hover:text-foreground transition-colors">เข้าสู่ระบบ</Link>
             </div>
           </div>

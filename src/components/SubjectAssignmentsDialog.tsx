@@ -151,7 +151,7 @@ export function SubjectAssignmentsDialog({ open, onOpenChange, subject }: Props)
                     <span className="font-medium">{a.title}</span>
                     {a.due_date && (
                       <Badge variant={isOverdue(a.due_date) ? "destructive" : "secondary"} className="text-[10px]">
-                        {isOverdue(a.due_date) ? "เลยกำหนด" : "กำหนดส่ง"} · {fmt(a.due_date)}
+                        {isOverdue(a.due_date) ? "เลยกำหนด" : "กำหนดส่ง"} - {fmt(a.due_date)}
                       </Badge>
                     )}
                   </div>
