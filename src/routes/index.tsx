@@ -42,22 +42,22 @@ function HomePage() {
       <div className="container relative mx-auto px-4 max-w-6xl">
         {/* Hero */}
         <section className="flex flex-col items-start pt-16 pb-14 md:pt-28 md:pb-20">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+          <div className="animate-fade mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur transition-colors hover:border-primary/40 hover:text-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
             วิทยาลัยเทคนิคลพบุรี - ช่างเทคนิคคอมพิวเตอร์
           </div>
 
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground text-balance">
+          <h1 className="animate-fade-up font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground text-balance" style={{ animationDelay: "60ms" }}>
             ตารางเรียน <span className="text-gradient-primary">/LBSchedule</span>
           </h1>
-          <p className="mt-5 max-w-2xl text-sm md:text-base text-muted-foreground leading-relaxed">
+          <p className="animate-fade-up mt-5 max-w-2xl text-sm md:text-base text-muted-foreground leading-relaxed" style={{ animationDelay: "140ms" }}>
             ระบบจัดตารางเรียนสำหรับนักศึกษาและอาจารย์ ค้นหาได้ทันทีโดยไม่ต้องเข้าสู่ระบบ
             มีระบบมอบหมายงาน แจ้งเตือน และรองรับการใช้งานบนมือถือ
           </p>
 
           {/* Search */}
-          <div className="mt-8 w-full max-w-2xl">
-            <div className="flex flex-col sm:flex-row gap-2 p-1.5 rounded-xl bg-card border border-border shadow-sm">
+          <div className="animate-fade-up mt-8 w-full max-w-2xl" style={{ animationDelay: "220ms" }}>
+            <div className="flex flex-col sm:flex-row gap-2 p-1.5 rounded-xl bg-card border border-border shadow-sm transition-all hover:border-primary/40 hover:shadow-glow">
               <Select value={majorId} onValueChange={setMajorId}>
                 <SelectTrigger className="flex-1 h-11 border-0 bg-transparent text-sm focus:ring-0 shadow-none">
                   <SelectValue placeholder="-- แสดงตารางเรียนทุกสาขาวิชา --" />
@@ -69,13 +69,13 @@ function HomePage() {
                   ))}
                 </SelectContent>
               </Select>
-              <Button onClick={handleSearch} size="default" className="h-11 px-6 gap-2">
+              <Button onClick={handleSearch} size="default" className="h-11 px-6 gap-2 transition-transform active:scale-[0.98]">
                 <Search className="h-4 w-4" /> ค้นหาตาราง
               </Button>
             </div>
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
-              <Link to="/schedule" className="inline-flex items-center gap-1 hover:text-foreground transition-colors">
-                ดูตารางทั้งหมด <ArrowRight className="h-3 w-3" />
+              <Link to="/schedule" className="group inline-flex items-center gap-1 hover:text-foreground transition-colors">
+                ดูตารางทั้งหมด <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <span className="opacity-40">-</span>
               <Link to="/auth" search={{ mode: "login" } as never} className="hover:text-foreground transition-colors">เข้าสู่ระบบ</Link>
@@ -89,12 +89,13 @@ function HomePage() {
             { icon: CalendarDays, title: "ดูตารางทั้งสัปดาห์", desc: "แสดงตารางเรียนแบบ timetable เข้าใจง่าย ใช้งานได้บนทุกอุปกรณ์" },
             { icon: Clock, title: "ค้นหาตามสาขา", desc: "เลือกสาขาวิชาและชั้นปีเพื่อดูตารางเฉพาะกลุ่มที่ต้องการ" },
             { icon: MapPin, title: "ห้องเรียน & อาจารย์", desc: "รายละเอียดผู้สอน ห้องเรียน และงานที่ได้รับมอบหมายครบทุกวิชา" },
-          ].map((f) => (
+          ].map((f, i) => (
             <div
               key={f.title}
-              className="group relative p-5 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors"
+              className="animate-fade-up group relative p-5 rounded-xl bg-card border border-border hover-lift hover:border-primary/50"
+              style={{ animationDelay: `${300 + i * 80}ms` }}
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4 group-hover:bg-primary/15 transition-colors">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary mb-4 transition-all group-hover:bg-primary/20 group-hover:scale-105">
                 <f.icon className="h-5 w-5" strokeWidth={1.75} />
               </div>
               <h3 className="font-display text-base mb-1.5 text-foreground">{f.title}</h3>
@@ -102,6 +103,7 @@ function HomePage() {
             </div>
           ))}
         </section>
+
       </div>
     </div>
   );
