@@ -149,10 +149,10 @@ function SchedulePage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
-      <header className="mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary">
+    <div className="container mx-auto px-4 sm:px-6 py-8 md:py-12 animate-fade">
+      <header className="mb-6 sm:mb-8">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary shadow-glow">
             <CalendarDays className="h-5 w-5 text-primary-foreground" aria-hidden="true" />
           </div>
           <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-foreground">
@@ -160,9 +160,10 @@ function SchedulePage() {
           </h1>
         </div>
         <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-          เลือกสาขาวิชาและชั้นปีเพื่อแสดงตารางเรียน · คลิกที่วิชาเพื่อดู/เพิ่มงาน
+          เลือกสาขาวิชาและชั้นปีเพื่อแสดงตารางเรียน - คลิกที่วิชาเพื่อดู/เพิ่มงาน
         </p>
       </header>
+
 
 
       <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-6">
@@ -248,11 +249,12 @@ function SchedulePage() {
                           <button
                             key={s.id}
                             onClick={() => openSubject(s)}
-                            className={`group absolute top-1.5 bottom-1.5 rounded-md bg-gradient-to-br border ${colors[i % colors.length]} px-2 py-1.5 overflow-hidden transition-colors cursor-pointer text-left hover:z-10`}
-                            style={{ left: `${left}%`, width: `${width}%` }}
+                            className={`group absolute top-1.5 bottom-1.5 rounded-md bg-gradient-to-br border ${colors[i % colors.length]} px-2 py-1.5 overflow-hidden transition-all duration-200 cursor-pointer text-left hover:z-10 hover:-translate-y-0.5 hover:shadow-lg animate-fade`}
+                            style={{ left: `${left}%`, width: `${width}%`, animationDelay: `${Math.min(i * 30, 300)}ms` }}
                             aria-label={`${s.subjects?.code ?? ""} ${s.subjects?.name ?? ""}, ${s.start_time.slice(0,5)} ถึง ${s.end_time.slice(0,5)}, ห้อง ${s.rooms?.name ?? "-"}${hasWork ? `, มีงาน ${counts!.total} รายการ` : ""}`}
-                            title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} · ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
+                            title={`${s.subjects?.code} ${s.subjects?.name}\n${s.teachers?.name ?? ""} - ${s.rooms?.name ?? ""}${hasWork ? `\nงาน ${counts!.total} รายการ` : ""}\nคลิกเพื่อดูงาน`}
                           >
+
                             {/* assignment indicator */}
                             {hasWork && (
                               <span className="absolute top-1 right-1 flex items-center gap-1 z-10">
@@ -274,7 +276,7 @@ function SchedulePage() {
                               {s.subjects?.name}
                             </div>
                             <div className="text-[10px] leading-tight truncate text-muted-foreground mt-0.5 tabular-nums">
-                              {s.start_time.slice(0, 5)}–{s.end_time.slice(0, 5)} · {s.rooms?.name}
+                              {s.start_time.slice(0, 5)}–{s.end_time.slice(0, 5)} - {s.rooms?.name}
                             </div>
                           </button>
                         );
@@ -320,7 +322,7 @@ function SchedulePage() {
                           {counts && counts.total > 0 && (
                             <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold border whitespace-nowrap ${counts.overdue > 0 ? "bg-destructive/15 text-destructive border-destructive/40" : "bg-primary/15 text-primary border-primary/40"}`}>
                               <span className={`h-1.5 w-1.5 rounded-full ${counts.overdue > 0 ? "bg-destructive animate-pulse" : "bg-primary"}`} />
-                              {counts.total} งาน{counts.overdue > 0 ? ` · เลย ${counts.overdue}` : ""}
+                              {counts.total} งาน{counts.overdue > 0 ? ` - เลย ${counts.overdue}` : ""}
                             </span>
                           )}
                         </span>

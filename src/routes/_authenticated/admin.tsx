@@ -177,7 +177,7 @@ function SubjectsAdmin() {
         {subjects.map((s) => (
           <div key={s.id} className="flex items-center justify-between py-3 gap-3">
             <div className="flex-1 min-w-0">
-              <div className="font-mono text-xs text-muted-foreground">{s.code} · {s.credits} หน่วยกิต</div>
+              <div className="font-mono text-xs text-muted-foreground">{s.code} - {s.credits} หน่วยกิต</div>
               <div className="font-medium truncate">{s.name}</div>
               {s.majors && <div className="text-xs text-muted-foreground">{(s.majors as { name: string }).name}</div>}
             </div>
@@ -335,7 +335,7 @@ function SchedulesAdmin() {
                   <td className="p-3"><span className="font-mono text-xs">{sub?.code}</span> {sub?.name}</td>
                   <td className="p-3 text-muted-foreground">{teach?.name}</td>
                   <td className="p-3 text-muted-foreground">{room?.name}</td>
-                  <td className="p-3 text-muted-foreground">{mj?.name} · ปี{s.year}/{s.section}</td>
+                  <td className="p-3 text-muted-foreground">{mj?.name} - ปี{s.year}/{s.section}</td>
                   <td className="p-3">
                     <Button size="sm" variant="ghost" onClick={() => del(s.id)} className="text-destructive hover:text-destructive">
                       <Trash2 className="h-4 w-4" />
